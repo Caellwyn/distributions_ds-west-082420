@@ -472,7 +472,7 @@ In our penalty kick example. Suppose we take for example a 10-kick penalty shoot
 
 The binomial distribution can tell me what the probability is that the shootout will result in exactly exactly $k$ goals out of $n$ shots ($k < n$).
 
-# Code along
+# Code Along
 What is the probability of a team scoring 7 goals in a shootout?
 
 
@@ -518,7 +518,7 @@ The Poisson distribution has a unique characteristic:
     
 $\Large\mu = \sigma^2 = \lambda$
 
-# Round Robin 
+# Code Along
 
 Northwestern Memorial is a very busy hospital.  The doctors there deliver, on average, 30 newborns per day.
 
