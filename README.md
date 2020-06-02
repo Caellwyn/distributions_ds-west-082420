@@ -12,7 +12,14 @@
 
 ## What is a statistical distribution?
 
-- A statistical distribution is a representation of the frequencies of potential events or the percentage of time each event occurs.
+> After establishing the set of all possible outcomes, a statistical distribution is a representation of the relative frequency each event will occur.
+
+The distributions we introduce today will reappear throughout the bootcamp.  They will:
+
+1. Allow us to conduct statistical tests to judge the validity of our conclusions.  As a data scientist at your company, you may be asked to judge whether a certain change to the user interface of your website increases conversion rate. 
+2. Provide the foundation for specific assumptions of linear regression.
+3. Appear in the cost functions tied to logistic regression and other models.
+4. Drive the classification decisions made in parametric models, such as Naive-Bayes. 
 
 # Activation
 
@@ -107,7 +114,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_15_0.png)
+![png](index_files/index_16_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -240,7 +247,7 @@ plt.bar(result_set, roll_probabilities)
 
 
 
-![png](index_files/index_31_1.png)
+![png](index_files/index_32_1.png)
 
 
 ## PDF: Probability Density Function
@@ -292,7 +299,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_43_0.png)
+![png](index_files/index_44_0.png)
 
 
 
@@ -307,7 +314,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_44_0.png)
+![png](index_files/index_45_0.png)
 
 
 ### Transforming  Right/Positively Skewed Data
@@ -400,7 +407,7 @@ for i in range(0,12):
 ```
 
 
-![png](index_files/index_54_0.png)
+![png](index_files/index_55_0.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -636,5 +643,5 @@ ax.set_title('Diabetes BMI with Outliers Removed');
 ```
 
 
-![png](index_files/index_94_0.png)
+![png](index_files/index_95_0.png)
 
