@@ -923,7 +923,7 @@ ax.legend(loc='best');
 ![png](index_files/index_95_0.png)
 
 
-# Code along
+# Code Along
 What is the probability of a team scoring 7 goals in a shootout?
 
 
@@ -937,7 +937,20 @@ choice = np.random.choice(mccalister)
 print(choice)
 ```
 
-    Johnhoy
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-1-7cfeedf2714d> in <module>
+          2  'Jacob', 'Jason', 'Johnhoy', 'Karim',
+          3 'Leana','Luluva', 'Matt', 'Maximilian', ]
+    ----> 4 np.random.seed(42)
+          5 choice = np.random.choice(mccalister)
+          6 print(choice)
+
+
+    NameError: name 'np' is not defined
 
 
 
@@ -1010,7 +1023,7 @@ The Poisson distribution has a unique characteristic:
     
 $\Large\mu = \sigma^2 = \lambda$
 
-# Round Robin 
+# Code Along
 
 Northwestern Memorial is a very busy hospital.  The doctors there deliver, on average, 30 newborns per day.
 
