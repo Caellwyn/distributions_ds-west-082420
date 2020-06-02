@@ -12,7 +12,14 @@
 
 ## What is a statistical distribution?
 
-- A statistical distribution is a representation of the frequencies of potential events or the percentage of time each event occurs.
+> After establishing the set of all possible outcomes, a statistical distribution is a representation of the relative frequency each event will occur.
+
+The distributions we introduce today will reappear throughout the bootcamp.  They will:
+
+1. Allow us to conduct statistical tests to judge the validity of our conclusions.  As a data scientist at your company, you may be asked to judge whether a certain change to the user interface of your website increases conversion rate. 
+2. Provide the foundation for specific assumptions of linear regression.
+3. Appear in the cost functions tied to logistic regression and other models.
+4. Drive the classification decisions made in parametric models, such as Naive-Bayes. 
 
 # Activation
 
@@ -116,7 +123,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_16_0.png)
+![png](index_files/index_17_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -172,7 +179,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_21_0.png)
+![png](index_files/index_22_0.png)
 
 
 ### Expected Value/Mean
@@ -353,7 +360,7 @@ ax.set_title("Two distributions differing only in mean")
 
 
 
-![png](index_files/index_45_1.png)
+![png](index_files/index_46_1.png)
 
 
 The variance of our plots describes how closely the points are gathered around the mean.  Low variance means tight and skinny, high variance short and wide.
@@ -389,7 +396,7 @@ ax.set_title("Two distributions with different variance")
 
 
 
-![png](index_files/index_47_1.png)
+![png](index_files/index_48_1.png)
 
 
 ## Skew 
@@ -424,7 +431,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_52_0.png)
+![png](index_files/index_53_0.png)
 
 
 
@@ -441,7 +448,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_53_0.png)
+![png](index_files/index_54_0.png)
 
 
 ### Transforming  Right/Positively Skewed Data
@@ -548,7 +555,7 @@ ax.set_ylim(0);
 ```
 
 
-![png](index_files/index_63_0.png)
+![png](index_files/index_64_0.png)
 
 
 # Pair Program
@@ -598,7 +605,7 @@ ax2.set_title('CDF of Male Height in the US')
 
 
 
-![png](index_files/index_68_1.png)
+![png](index_files/index_69_1.png)
 
 
 If we provide numpy with the underlying parameters of our distribution, we can calculate: 
@@ -665,7 +672,7 @@ print(box['boxes'][0].get_data())
 
 
 
-![png](index_files/index_75_1.png)
+![png](index_files/index_76_1.png)
 
 
 # Common Discrete Distributions
@@ -708,7 +715,7 @@ ax.set_title('Bernouli Distribution of Penalty Kicks')
 
 
 
-![png](index_files/index_81_1.png)
+![png](index_files/index_82_1.png)
 
 
 The expected value is the probability of success, i.e. **.75**
@@ -750,7 +757,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_86_0.png)
+![png](index_files/index_87_0.png)
 
 
 # Code along
@@ -815,7 +822,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_94_0.png)
+![png](index_files/index_95_0.png)
 
 
 The Poisson distribution has a unique characteristic:
@@ -906,7 +913,7 @@ ax.plot(z_curve, stats.norm(mu,sigma).pdf(z_curve),
 
 
 
-![png](index_files/index_104_1.png)
+![png](index_files/index_105_1.png)
 
 
 ![](images/normal_2.png)
@@ -933,7 +940,7 @@ ax.set_xlabel('Height in Inches');
 ```
 
 
-![png](index_files/index_108_0.png)
+![png](index_files/index_109_0.png)
 
 
 # Standard Normal Distribution
@@ -962,7 +969,7 @@ sns.kdeplot(z_dist, ax=ax)
 
 
 
-![png](index_files/index_111_1.png)
+![png](index_files/index_112_1.png)
 
 
 ![](images/empirical_rule.png)
@@ -1013,7 +1020,7 @@ sns.boxplot(df['bmi'])
 
 
 
-![png](index_files/index_119_1.png)
+![png](index_files/index_120_1.png)
 
 
 Using `stats.zscore`,remove all values that fall outside of  2.5 standard deviations on either side of the mean.
