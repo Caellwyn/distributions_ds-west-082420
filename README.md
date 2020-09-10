@@ -70,6 +70,10 @@ ax.set_title('Distribution of Divy Rides per Day')
 
 
 
+
+![png](index_files/index_13_1.png)
+
+
 #### Examples of analytical discrete distributions:
 
 > 1. The Uniform Distribution:- occurs when all possible outcomes are equally likely.
@@ -92,6 +96,72 @@ With a continous distribution, the set of possible results is an infinite set of
 > 1. Continuous uniform
 > 2. The Normal or Gaussian distribution.
 > 3. Exponential
+
+
+
+```python
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+
+ax.boxplot(divy_trips.ride_time);
+ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
+```
+
+
+
+
+    Text(0.5, 1.0, 'Divy Bike Ride Time in Seconds\n (No Outliers)')
+
+
+
+
+![png](index_files/index_17_1.png)
+
+
+
+```python
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+
+ax.boxplot(divy_trips.ride_time, showfliers=False);
+ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
+```
+
+
+
+
+    Text(0.5, 1.0, 'Divy Bike Ride Time in Seconds\n (No Outliers)')
+
+
+
+
+![png](index_files/index_18_1.png)
+
+
+
+```python
+fig, ax = plt.subplots()
+
+no_fliers_rt = divy_trips[divy_trips.ride_time < 2000]
+
+ax.hist(no_fliers_rt.ride_time, bins=50, normed=True);
+ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
+```
+
+    /Users/johnmaxbarry/.local/lib/python3.7/site-packages/ipykernel_launcher.py:6: MatplotlibDeprecationWarning: 
+    The 'normed' kwarg was deprecated in Matplotlib 2.1 and will be removed in 3.1. Use 'density' instead.
+      
+
+
+
+
+
+    Text(0.5, 1.0, 'Divy Bike Ride Time in Seconds\n (No Outliers)')
+
+
+
+
+![png](index_files/index_19_2.png)
 
 
 The distinction between descrete and continuous is very important to have in your mind, and can easily be seen in plots. 
@@ -139,7 +209,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_18_0.png)
+![png](index_files/index_21_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -287,7 +357,7 @@ plt.bar(result_set, roll_probabilities)
 
 
 
-![png](index_files/index_35_1.png)
+![png](index_files/index_38_1.png)
 
 
 ## PDF: Probability Density Function
@@ -339,7 +409,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_47_0.png)
+![png](index_files/index_50_0.png)
 
 
 
@@ -354,7 +424,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_48_0.png)
+![png](index_files/index_51_0.png)
 
 
 ### Transforming  Right/Positively Skewed Data
@@ -440,7 +510,7 @@ for i in range(0,12):
 ```
 
 
-![png](index_files/index_58_0.png)
+![png](index_files/index_61_0.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -676,5 +746,5 @@ ax.set_title('Diabetes BMI with Outliers Removed');
 ```
 
 
-![png](index_files/index_98_0.png)
+![png](index_files/index_101_0.png)
 
