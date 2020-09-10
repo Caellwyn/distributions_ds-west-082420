@@ -46,13 +46,38 @@ We will learn about a variety of different probability distributions, but before
 
 > - There are 6 possible outcomes of the roll.  In other words, 4.5 cannot be an outcome. As you see on the PMF plot, the bars which represent probability do not touch, suggesting non-integer numbers between 1 and 6 are not possible results.
 
-#### Examples of discrete distributions:
+Let's take a moment to look back at the Divy data we encountered in our visualizations lesson.
+
+
+
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+fig, ax = plt.subplots()
+
+values, counts = np.unique(divy_trips['weekday'], return_counts = True)
+counts = [count/sum(counts) for count in counts]
+ax.bar(values, counts)
+ax.set_title('Distribution of Divy Rides per Day')
+```
+
+
+
+
+    Text(0.5, 1.0, 'Distribution of Divy Rides per Day')
+
+
+
+#### Examples of analytical discrete distributions:
 
 > 1. The Uniform Distribution:- occurs when all possible outcomes are equally likely.
 > 2. The Bernoulli Distribution: - represents the probability of success for a certain experiment (binary outcome).
 > 3. The Binomial Distribution - represents the probability of observing a specific number of successes (Bernoulli trials) in a specific number of trials.
 > 4. The Poisson Distribution:- represents the probability of 𝑛 events in a given time period when the overall rate of occurrence is constant.
 
+- Note: an analytical distribution is one which is created by a mathematical function. [ThinkStats2e](http://greenteapress.com/thinkstats2/html/thinkstats2006.html)
 
 ## Continuous
 
@@ -63,7 +88,7 @@ With a continous distribution, the set of possible results is an infinite set of
 
 ![](images/pdf.png)
 
-#### Examples of continuous distributions
+#### Examples of analytical continuous distributions
 > 1. Continuous uniform
 > 2. The Normal or Gaussian distribution.
 > 3. Exponential
@@ -114,7 +139,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_16_0.png)
+![png](index_files/index_18_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -129,6 +154,21 @@ The $\bf{probability\ mass\ function\ (pmf)}$ for a random variable gives, at an
 - 10 "4"s
 
 We then represent this function in a plot like so:
+
+
+```python
+probs = [count/sum(counts) for count in counts]
+
+lotto_dict = {number: prob for number,prob in zip(numbers, probs)}
+lotto_dict
+```
+
+
+
+
+    {1: 0.5, 2: 0.25, 3: 0.15, 4: 0.1}
+
+
 
 ### Expected Value/Mean
 
@@ -247,7 +287,7 @@ plt.bar(result_set, roll_probabilities)
 
 
 
-![png](index_files/index_32_1.png)
+![png](index_files/index_35_1.png)
 
 
 ## PDF: Probability Density Function
@@ -299,7 +339,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_44_0.png)
+![png](index_files/index_47_0.png)
 
 
 
@@ -314,7 +354,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_45_0.png)
+![png](index_files/index_48_0.png)
 
 
 ### Transforming  Right/Positively Skewed Data
@@ -341,24 +381,17 @@ Another method of handling skewness is finding outliers and possibly removing th
 
 ## Pair: Report Back the effect of your transformation
 
-Below, we have added some significant right skewed to the data by adding points between 2 and 4 standard deviations to to the right of the mean.
+Let's return to our Divy ride time example.  
 
-Apply each transformation mentioned above.
-Hint: The data is in an array.  You can then feed the array into numpy functions, or broadcast a calculation across all elements.
+Below is the original distribution of ride times.
 
 
-```python
-print(stats.skew(np.log(right_skewed_data)))
-print(stats.skew(np.sqrt(right_skewed_data)))
-print(stats.skew(right_skewed_data**(1/3)))
-print(stats.skew(left_skewed_data**2))
-```
-
-    0.09338424083669129
-    0.2765079822988934
-    0.21553770958639826
-    0.01120015431103847
-
+With a partner, apply an appropriate transformation to reduce the skew of the distribution:
+    
+  - 1. plot transformed distribution
+  - 2. Report transformed skew
+    - Hint: certain transformations don't like zeros
+    
 
 # Kurtosis
 
@@ -407,7 +440,7 @@ for i in range(0,12):
 ```
 
 
-![png](index_files/index_55_0.png)
+![png](index_files/index_58_0.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -643,5 +676,5 @@ ax.set_title('Diabetes BMI with Outliers Removed');
 ```
 
 
-![png](index_files/index_95_0.png)
+![png](index_files/index_98_0.png)
 
