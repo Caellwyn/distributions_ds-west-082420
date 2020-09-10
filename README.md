@@ -46,13 +46,63 @@ We will learn about a variety of different probability distributions, but before
 
 > - There are 6 possible outcomes of the roll.  In other words, 4.5 cannot be an outcome. As you see on the PMF plot, the bars which represent probability do not touch, suggesting non-integer numbers between 1 and 6 are not possible results.
 
-#### Examples of discrete distributions:
+Let's take a moment to look back at the Divy data we encountered in our visualizations lesson.
+
+
+
+
+```python
+! curl https://divvy-tripdata.s3.amazonaws.com/Divvy_Trips_2020_Q1.zip -o 'data/divy_2020_Q1.zip'
+! unzip data/divy_2020_Q1.zip -d data
+```
+
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+     35 15.1M   35 5473k    0     0  2929k      0  0:00:05  0:00:01  0:00:04 2928k^C
+    Archive:  data/divy_2020_Q1.zip
+      End-of-central-directory signature not found.  Either this file is not
+      a zipfile, or it constitutes one disk of a multi-part archive.  In the
+      latter case the central directory and zipfile comment will be found on
+      the last disk(s) of this archive.
+    unzip:  cannot find zipfile directory in one of data/divy_2020_Q1.zip or
+            data/divy_2020_Q1.zip.zip, and cannot find data/divy_2020_Q1.zip.ZIP, period.
+
+
+
+```python
+import pandas as pd
+%load_ext autoreload
+%autoreload 2
+from src.data_import import prep_divy
+from src.student_caller import three_random_students
+from src.student_list import student_first_names
+divy_trips = prep_divy()
+
+```
+
+    The autoreload extension is already loaded. To reload it, use:
+      %reload_ext autoreload
+
+
+
+```python
+# Let's create a probability distribution of the rides per day of the week.
+
+```
+
+
+```python
+# code here
+```
+
+#### Examples of analytical discrete distributions:
 
 > 1. The Uniform Distribution:- occurs when all possible outcomes are equally likely.
 > 2. The Bernoulli Distribution: - represents the probability of success for a certain experiment (binary outcome).
 > 3. The Binomial Distribution - represents the probability of observing a specific number of successes (Bernoulli trials) in a specific number of trials.
 > 4. The Poisson Distribution:- represents the probability of 𝑛 events in a given time period when the overall rate of occurrence is constant.
 
+- Note: an analytical distribution is one which is created by a mathematical function. [ThinkStats2e](http://greenteapress.com/thinkstats2/html/thinkstats2006.html)
 
 ## Continuous
 
@@ -63,10 +113,57 @@ With a continous distribution, the set of possible results is an infinite set of
 
 ![](images/pdf.png)
 
-#### Examples of continuous distributions
+#### Examples of analytical continuous distributions
 > 1. Continuous uniform
 > 2. The Normal or Gaussian distribution.
 > 3. Exponential
+
+
+
+```python
+# Let's take the data above, and inspect and plot a continuous variable: ride time.
+
+```
+
+
+```python
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+
+ax.boxplot(divy_trips.ride_time, showfliers=False);
+ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
+```
+
+
+
+
+    Text(0.5, 1.0, 'Divy Bike Ride Time in Seconds\n (No Outliers)')
+
+
+
+
+![png](index_files/index_21_1.png)
+
+
+
+```python
+fig, ax = plt.subplots()
+
+no_fliers_rt = divy_trips[divy_trips.ride_time < 2000]
+
+ax.hist(no_fliers_rt.ride_time, bins=50);
+ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
+```
+
+
+
+
+    Text(0.5, 1.0, 'Divy Bike Ride Time in Seconds\n (No Outliers)')
+
+
+
+
+![png](index_files/index_22_1.png)
 
 
 The distinction between descrete and continuous is very important to have in your mind, and can easily be seen in plots. 
@@ -123,7 +220,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_17_0.png)
+![png](index_files/index_25_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -145,21 +242,14 @@ We then represent this function in a plot like so:
 
 numbers = range(1,5)
 counts = [50,25, 15, 10]
-
-# calculate the probs by dividing each count by the total number of balls.
-
-probs = [count/sum(counts) for count in counts]
-
-lotto_dict = {number: prob for number,prob in zip(numbers, probs)}
-lotto_dict
 ```
 
 
-
-
-    {1: 0.5, 2: 0.25, 3: 0.15, 4: 0.1}
-
-
+```python
+# calculate the probs by dividing each count by the total number of balls.
+probs = None
+loto_dict = {}
+```
 
 
 ```python
@@ -179,7 +269,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_22_0.png)
+![png](index_files/index_31_0.png)
 
 
 ### Expected Value/Mean
@@ -360,7 +450,7 @@ ax.set_title("Two distributions differing only in mean")
 
 
 
-![png](index_files/index_46_1.png)
+![png](index_files/index_55_1.png)
 
 
 The variance of our plots describes how closely the points are gathered around the mean.  Low variance means tight and skinny, high variance short and wide.
@@ -396,7 +486,7 @@ ax.set_title("Two distributions with different variance")
 
 
 
-![png](index_files/index_48_1.png)
+![png](index_files/index_57_1.png)
 
 
 ## Skew 
@@ -411,7 +501,7 @@ z_curve = np.random.normal(0,1, 1000)
 print(stats.skew(z_curve))
 ```
 
-    0.07098768308548697
+    -0.03008264411020595
 
 
 To add right skew to the data, let's add some outliers to the left of the mean.
@@ -431,7 +521,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_53_0.png)
+![png](index_files/index_62_0.png)
 
 
 
@@ -448,7 +538,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_54_0.png)
+![png](index_files/index_63_0.png)
 
 
 ### Transforming  Right/Positively Skewed Data
@@ -467,6 +557,11 @@ involves converting x to x^(1/3). This is a fairly strong transformation with a 
 #### The logarithm:
 x to log base 10 of x, or x to log base e of x (ln x), or x to log base 2 of x, is a strong transformation and can be used to reduce right skewness.
 
+
+```python
+# np.log(array_like_object) will transform each element of the array.
+```
+
 ## Left/Negatively Skewed Data
 
 ### Square transformation:
@@ -475,36 +570,60 @@ Another method of handling skewness is finding outliers and possibly removing th
 
 ## Pair: Report Back the effect of your transformation
 
-Below, we have added some significant right skewed to the data by adding points between 2 and 4 standard deviations to to the right of the mean.
+Let's return to our Divy ride time example.  
 
-Apply each transformation mentioned above.
-Hint: The data is in an array.  You can then feed the array into numpy functions, or broadcast a calculation across all elements.
+Below is the original distribution of ride times.
+
 
 
 ```python
-import numpy as np
-from scipy import stats
-no_skew_dist = np.random.normal(10,1, 1000)
-add_right_skew = np.random.choice(np.random.normal(12,1,1000) , 100)
-right_skewed_data = np.concatenate([no_skew_dist, add_right_skew])
-print(f'Right Skew {stats.skew(right_skewed_data)}')
+fig, ax = plt.subplots()
 
-no_skew_dist_2 = np.random.normal(10,1, 1000)
-add_left_skew = np.random.choice(np.random.normal(8,1,1000) , 100)
-left_skewed_data = np.concatenate([no_skew_dist_2, add_left_skew])
-print(f'Left Skew {stats.skew(left_skewed_data)}')
-stats.skew(left_skewed_data)
+
+ax.hist(divy_trips.ride_time, bins=50);
+ax.set_title("""Divy Bike Ride Time: 
+                Heavy Right Skew = {}""".format(round(
+                                                      stats.skew(divy_trips.ride_time)
+                                                    ,3)
+                                               )
+            );
+
 ```
 
-    Right Skew 0.2878890743706462
-    Left Skew -0.398050618316759
+
+![png](index_files/index_69_0.png)
+
+
+With a partner, apply an appropriate transformation to reduce the skew of the distribution:
+    
+  - 1. plot transformed distribution
+  - 2. Report transformed skew
+    - Hint: certain transformations don't like zeros
+    
+
+
+```python
+# your code here
+```
+
+
+```python
+
+fig, ax = plt.subplots()
+log_ride = np.log(divy_trips[divy_trips.ride_time>0]['ride_time'])
+ax.hist(log_ride, bins=50);
+ax.set_title("Log Transformed Ride Times: {}".format(round(stats.skew(log_ride),2)))
+```
 
 
 
 
+    Text(0.5, 1.0, 'Log Transformed Ride Times: -1.35')
 
-    -0.398050618316759
 
+
+
+![png](index_files/index_72_1.png)
 
 
 # Kurtosis
@@ -555,7 +674,7 @@ ax.set_ylim(0);
 ```
 
 
-![png](index_files/index_64_0.png)
+![png](index_files/index_77_0.png)
 
 
 # Pair Program
@@ -605,7 +724,7 @@ ax2.set_title('CDF of Male Height in the US')
 
 
 
-![png](index_files/index_69_1.png)
+![png](index_files/index_82_1.png)
 
 
 If we provide numpy with the underlying parameters of our distribution, we can calculate: 
@@ -672,7 +791,7 @@ print(box['boxes'][0].get_data())
 
 
 
-![png](index_files/index_76_1.png)
+![png](index_files/index_89_1.png)
 
 
 # Common Discrete Distributions
@@ -715,7 +834,7 @@ ax.set_title('Bernouli Distribution of Penalty Kicks')
 
 
 
-![png](index_files/index_82_1.png)
+![png](index_files/index_95_1.png)
 
 
 The expected value is the probability of success, i.e. **.75**
@@ -757,7 +876,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_87_0.png)
+![png](index_files/index_100_0.png)
 
 
 # Code Along
@@ -766,28 +885,10 @@ What is the probability of a team scoring 7 goals in a shootout?
 
 
 ```python
-mccalister = ['Adam', 'Amanda','Chum', 'Dann', 
- 'Jacob', 'Jason', 'Johnhoy', 'Karim', 
-'Leana','Luluva', 'Matt', 'Maximilian', ]
-np.random.seed(42)
-choice = np.random.choice(mccalister)
-print(choice)
+three_random_students(student_first_names)
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-1-7cfeedf2714d> in <module>
-          2  'Jacob', 'Jason', 'Johnhoy', 'Karim',
-          3 'Leana','Luluva', 'Matt', 'Maximilian', ]
-    ----> 4 np.random.seed(42)
-          5 choice = np.random.choice(mccalister)
-          6 print(choice)
-
-
-    NameError: name 'np' is not defined
+    ['Sam' 'Jeffrey' 'Ozair']
 
 
 
@@ -835,7 +936,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_95_0.png)
+![png](index_files/index_108_0.png)
 
 
 The Poisson distribution has a unique characteristic:
@@ -852,10 +953,15 @@ What is the probability of seeing exactly 40 newborns delivered on a given day.
 
 
 ```python
-mccalister = ['Adam', 'Amanda','Chum', 'Dann', 
- 'Jacob', 'Jason', 'Johnhoy', 'Karim', 
-'Leana','Luluva', 'Matt', 'Maximilian', ]
+three_random_students
 ```
+
+
+
+
+    <function src.student_caller.three_random_students(student_list, question=None)>
+
+
 
 
 ```python
@@ -926,7 +1032,7 @@ ax.plot(z_curve, stats.norm(mu,sigma).pdf(z_curve),
 
 
 
-![png](index_files/index_105_1.png)
+![png](index_files/index_118_1.png)
 
 
 ![](images/normal_2.png)
@@ -953,7 +1059,7 @@ ax.set_xlabel('Height in Inches');
 ```
 
 
-![png](index_files/index_109_0.png)
+![png](index_files/index_122_0.png)
 
 
 # Standard Normal Distribution
@@ -982,7 +1088,7 @@ sns.kdeplot(z_dist, ax=ax)
 
 
 
-![png](index_files/index_112_1.png)
+![png](index_files/index_125_1.png)
 
 
 ![](images/empirical_rule.png)
@@ -1033,7 +1139,7 @@ sns.boxplot(df['bmi'])
 
 
 
-![png](index_files/index_120_1.png)
+![png](index_files/index_133_1.png)
 
 
 Using `stats.zscore`,remove all values that fall outside of  2.5 standard deviations on either side of the mean.
