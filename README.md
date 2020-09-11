@@ -80,6 +80,10 @@ divy_trips = prep_divy()
 
 ```
 
+    The autoreload extension is already loaded. To reload it, use:
+      %reload_ext autoreload
+
+
 
 ```python
 # Let's create a probability distribution of the rides per day of the week.
@@ -224,9 +228,6 @@ loto_dict = {}
 ```python
 # Plot here!
 
-# x = range(1, 5)
-# lotto_dict = {1: 0.5, 2: 0.25, 3: 0.15, 4:.1}
-# y = [lotto_dict[num] for num in x]
 
 x = list(lotto_dict.keys())
 y = list(lotto_dict.values())
@@ -470,7 +471,7 @@ z_curve = np.random.normal(0,1, 1000)
 print(stats.skew(z_curve))
 ```
 
-    -0.03008264411020595
+    -0.06251369362484344
 
 
 To add right skew to the data, let's add some outliers to the left of the mean.
@@ -548,7 +549,6 @@ Below is the original distribution of ride times.
 ```python
 fig, ax = plt.subplots()
 
-
 ax.hist(divy_trips.ride_time, bins=50);
 ax.set_title("""Divy Bike Ride Time: 
                 Heavy Right Skew = {}""".format(round(
@@ -575,26 +575,6 @@ With a partner, apply an appropriate transformation to reduce the skew of the di
 # your code here
 ```
 
-
-```python
-
-fig, ax = plt.subplots()
-log_ride = np.log(divy_trips[divy_trips.ride_time>0]['ride_time'])
-ax.hist(log_ride, bins=50);
-ax.set_title("Log Transformed Ride Times: {}".format(round(stats.skew(log_ride),2)))
-```
-
-
-
-
-    Text(0.5, 1.0, 'Log Transformed Ride Times: -1.35')
-
-
-
-
-![png](index_files/index_73_1.png)
-
-
 # Kurtosis
 
 ![kurtosis](images/kurtosis.png)
@@ -620,44 +600,31 @@ Let's create the CDF for our Lotto example
 
 
 ```python
-# align the values
 lotto_dict = {0:0, 1:50, 2:25, 3:15, 4:10}
-values = list(lotto_dict.keys())
+# align the values
+
 # count the number of values that are less than or equal to the current value
-count_less_than_equal = np.cumsum(list(lotto_dict.values()))
+
 # divide by total number of values
-prob_less_than_or_equal = count_less_than_equal/sum(lotto_dict.values()) 
 
 ```
 
 
 ```python
-fig, ax = plt.subplots()
-ax.plot(values, prob_less_than_or_equal, 'bo', ms=8, label='lotto pdf')
-for i in range(0,5):
-    ax.hlines(prob_less_than_or_equal[i], i,i+1, 'r', lw=5,)
-for i in range(0,4):
-    ax.vlines(i+1, prob_less_than_or_equal[i+1],prob_less_than_or_equal[i],  linestyles='dotted')
-ax.legend(loc='best' )
-ax.set_ylim(0);
+# Plot
 ```
-
-
-![png](index_files/index_78_0.png)
-
 
 # Pair Program
-Taking what we know about cumulative distribution functions, create a plot of the CDF of a fair 12-sided die.
+Taking what we know about cumulative distribution functions, create a plot of the CDF of divy bike rides by hour of the day.
 
 Take this in steps (no pun intended).
-1. Create a list of possible rolls. 
-2. Multiply the probability of each roll by the value of the roll.
-3. Record the cumulative sum of each roll (hint: try np.cumsum()
+1. Count the number of rides per hour.  Hint: Use groupby.
+2. Make sure the hours are arranged from earliest to latest.
+3. Calculate the cumulative sum after each hour (hint: try np.cumsum())
+4. Use a list comprehension or for loop to divide each hours cumsum by the total.
+5. Create a bar plot in matplotlib.
+6. Fix the x-ticks to be positioned at the beginning of each bar
 
-
-```python
-# Your Code Here
-```
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
 - Have to be careful with interpretation in PDF
@@ -693,7 +660,7 @@ ax2.set_title('CDF of Male Height in the US')
 
 
 
-![png](index_files/index_83_1.png)
+![png](index_files/index_81_1.png)
 
 
 If we provide numpy with the underlying parameters of our distribution, we can calculate: 
@@ -760,10 +727,8 @@ print(box['boxes'][0].get_data())
 
 
 
-![png](index_files/index_90_1.png)
+![png](index_files/index_88_1.png)
 
-
-# Common Discrete Distributions
 
 # 3. Bernouli and Binomial Distributions
 
@@ -803,7 +768,7 @@ ax.set_title('Bernouli Distribution of Penalty Kicks')
 
 
 
-![png](index_files/index_96_1.png)
+![png](index_files/index_93_1.png)
 
 
 The expected value is the probability of success, i.e. **.75**
@@ -835,17 +800,15 @@ The binomial distribution can tell me what the probability is that the shootout 
 n = 10
 p = 0.75
 fig, ax = plt.subplots(1, 1, figsize=(6, 6))
-x = np.arange(stats.binom.ppf(0.001, n, p),
+x = np.arange(stats.binom.ppf(0.00001, n, p),
               stats.binom.ppf(.99, n, p)+1)
 
-ax.plot(x, stats.binom.pmf(x, n, p), 'bo', ms=8, label='binom pmf')
-ax.vlines(x, 0, stats.binom.pmf(x, n, p), 'r', linewidth=5,
-          label='pmf')
+ax.bar(x, stats.binom.pmf(x, n, p),  label='binom pmf', color='r')
 ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_101_0.png)
+![png](index_files/index_98_0.png)
 
 
 # Code Along
@@ -893,19 +856,18 @@ The pmf of the Poisson distribution would be:
 ```python
 rate = 40
 
-
 fig, ax = plt.subplots(1, 1, figsize=(6, 6))
-x = np.arange(stats.poisson.ppf(0.1, rate),
-              stats.poisson.ppf(.99, rate))
+x = np.arange(stats.poisson.ppf(0.001, rate),
+              stats.poisson.ppf(.9999, rate))
 
-ax.plot(x, stats.poisson(rate).pmf(x), 'bo', ms=8, label='binom pmf')
-ax.vlines(x, 0, stats.poisson(rate).pmf(x), 'r', linewidth=5,
+
+ax.bar(x, stats.poisson(rate).pmf(x), color = 'r',
           label='Poisson Distribution:\n Website Hits Over an Hour')
 ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_109_0.png)
+![png](index_files/index_106_0.png)
 
 
 The Poisson distribution has a unique characteristic:
@@ -922,25 +884,10 @@ What is the probability of seeing exactly 40 newborns delivered on a given day.
 
 
 ```python
-three_random_students
+three_random_students(student_first_names)
 ```
 
-
-
-
-    <function src.student_caller.three_random_students(student_list, question=None)>
-
-
-
-
-```python
-np.random.seed(42)
-new_choice = np.random.choice(mccalister)
-print(new_choice)
-mccalister.remove(new_choice)
-```
-
-    Jacob
+    ['Ali' 'Sindhu' 'Sam']
 
 
 
@@ -1001,7 +948,7 @@ ax.plot(z_curve, stats.norm(mu,sigma).pdf(z_curve),
 
 
 
-![png](index_files/index_119_1.png)
+![png](index_files/index_115_1.png)
 
 
 ![](images/normal_2.png)
@@ -1018,18 +965,6 @@ Use numpy's random.normal to generate a sample of 1000 women and plot the histog
 ```python
 # Code here
 ```
-
-
-```python
-fig, ax = plt.subplots()
-ax.hist(np.random.normal(65, 3.5, 1000))
-ax.set_title('Distribution of Heights of American Women')
-ax.set_xlabel('Height in Inches');
-```
-
-
-![png](index_files/index_123_0.png)
-
 
 # Standard Normal Distribution
 
@@ -1057,7 +992,7 @@ sns.kdeplot(z_dist, ax=ax)
 
 
 
-![png](index_files/index_126_1.png)
+![png](index_files/index_121_1.png)
 
 
 ![](images/empirical_rule.png)
@@ -1108,7 +1043,7 @@ sns.boxplot(df['bmi'])
 
 
 
-![png](index_files/index_134_1.png)
+![png](index_files/index_129_1.png)
 
 
 Using `stats.zscore`,remove all values that fall outside of  2.5 standard deviations on either side of the mean.
