@@ -80,6 +80,10 @@ divy_trips = prep_divy()
 
 ```
 
+    The autoreload extension is already loaded. To reload it, use:
+      %reload_ext autoreload
+
+
 
 ```python
 # Let's create a probability distribution of the rides per day of the week.
@@ -209,14 +213,9 @@ fig, ax = plt.subplots()
 
 no_fliers_rt = divy_trips[divy_trips.ride_time < 2000]
 
-ax.hist(no_fliers_rt.ride_time, bins=50, normed=True);
+ax.hist(no_fliers_rt.ride_time, bins=50, density=True);
 ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 ```
-
-    /Users/johnmaxbarry/.local/lib/python3.7/site-packages/ipykernel_launcher.py:6: MatplotlibDeprecationWarning: 
-    The 'normed' kwarg was deprecated in Matplotlib 2.1 and will be removed in 3.1. Use 'density' instead.
-      
-
 
 
 
@@ -226,7 +225,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_27_2.png)
+![png](index_files/index_27_1.png)
 
 
 The distinction between descrete and continuous is very important to have in your mind, and can easily be seen in plots. 
@@ -376,9 +375,6 @@ lotto_dict
 ```python
 # Plot here!
 
-# x = range(1, 5)
-# lotto_dict = {1: 0.5, 2: 0.25, 3: 0.15, 4:.1}
-# y = [lotto_dict[num] for num in x]
 
 x = list(lotto_dict.keys())
 y = list(lotto_dict.values())
@@ -558,7 +554,8 @@ Create the pmf of a 12 sided die
 result_set = list(range(1,13))
 roll_probabilities = [1/13 for result in result_set]
 
-plt.bar(result_set, roll_probabilities)
+fig, ax = plt.subplots()
+ax.bar(result_set, roll_probabilities, width=.5)
 ```
 
 
@@ -676,7 +673,7 @@ z_curve = np.random.normal(0,1, 1000)
 print(stats.skew(z_curve))
 ```
 
-    -0.03008264411020595
+    -0.06251369362484344
 
 
 To add right skew to the data, let's add some outliers to the left of the mean.
@@ -786,7 +783,6 @@ Below is the original distribution of ride times.
 ```python
 fig, ax = plt.subplots()
 
-
 ax.hist(divy_trips.ride_time, bins=50);
 ax.set_title("""Divy Bike Ride Time: 
                 Heavy Right Skew = {}""".format(round(
@@ -815,7 +811,7 @@ With a partner, apply an appropriate transformation to reduce the skew of the di
 
 
 ```python
-
+#__SOLUTION__
 fig, ax = plt.subplots()
 log_ride = np.log(divy_trips[divy_trips.ride_time>0]['ride_time'])
 ax.hist(log_ride, bins=50);
@@ -858,6 +854,23 @@ Let's create the CDF for our Lotto example
 
 
 ```python
+lotto_dict = {0:0, 1:50, 2:25, 3:15, 4:10}
+# align the values
+
+# count the number of values that are less than or equal to the current value
+
+# divide by total number of values
+
+```
+
+
+```python
+# Plot
+```
+
+
+```python
+#__SOLUTION__
 # align the values
 lotto_dict = {0:0, 1:50, 2:25, 3:15, 4:10}
 values = list(lotto_dict.keys())
@@ -865,56 +878,91 @@ values = list(lotto_dict.keys())
 count_less_than_equal = np.cumsum(list(lotto_dict.values()))
 # divide by total number of values
 prob_less_than_or_equal = count_less_than_equal/sum(lotto_dict.values()) 
-
-```
-
-
-```python
-fig, ax = plt.subplots()
-ax.plot(values, prob_less_than_or_equal, 'bo', ms=8, label='lotto pdf')
-for i in range(0,5):
-    ax.hlines(prob_less_than_or_equal[i], i,i+1, 'r', lw=5,)
-for i in range(0,4):
-    ax.vlines(i+1, prob_less_than_or_equal[i+1],prob_less_than_or_equal[i],  linestyles='dotted')
-ax.legend(loc='best' )
-ax.set_ylim(0);
-```
-
-
-![png](index_files/index_89_0.png)
-
-
-# Pair Program
-Taking what we know about cumulative distribution functions, create a plot of the CDF of a fair 12-sided die.
-
-Take this in steps (no pun intended).
-1. Create a list of possible rolls. 
-2. Multiply the probability of each roll by the value of the roll.
-3. Record the cumulative sum of each roll (hint: try np.cumsum()
-
-
-```python
-# Your Code Here
 ```
 
 
 ```python
 #__SOLUTION__
-fig, ax = plt.subplots()
-rolls = list(range(0,13))
-cumu_probs = np.cumsum([1/12 for number in range(1,13)])
+fix, ax = plt.subplots()
+ax.bar(values, prob_less_than_or_equal, width=1)
 
-cumu_probs = np.insert(cumu_probs,0,0,axis=0)
-ax.plot(rolls, cumu_probs, 'bo', color='blue')
-# ax.vlines(rolls, 0, cumu_probs, 'r', lw=5)
-for i in range(0,13):
-    ax.hlines(cumu_probs[i], i,i+1, 'r', lw=5,)
-for i in range(0,12):
-    ax.vlines(i+1, cumu_probs[i+1],cumu_probs[i],  linestyles='dotted')
+ax.set_title('Lotto CDF')
+
+x_tick_values = list(range(0,6))
+x_tick_pos = [tick-.5 for tick in x_tick_values]
+
+ax.set_xticks(x_tick_pos)
+ax.set_xticklabels(x_tick_values);
 ```
 
 
-![png](index_files/index_92_0.png)
+![png](index_files/index_91_0.png)
+
+
+# Pair Program
+Taking what we know about cumulative distribution functions, create a plot of the CDF of divy bike rides by hour of the day.
+
+Take this in steps (no pun intended).
+1. Count the number of rides per hour.  Hint: Use groupby.
+2. Make sure the hours are arranged from earliest to latest.
+3. Calculate the cumulative sum after each hour (hint: try np.cumsum())
+4. Use a list comprehension or for loop to divide each hours cumsum by the total.
+5. Create a bar plot in matplotlib.
+6. Fix the x-ticks to be positioned at the beginning of each bar
+
+
+
+```python
+#__SOLUTION__
+
+rides_per_hr = divy_trips.groupby('hour').count()['ride_id']
+
+rides_per_hr_cs = rides_per_hour.cumsum()
+
+rides_per_hr_cdf = [hour_count/rides_per_hr_cs[23] for hour_count in rides_per_hr_cs]
+
+fig, ax = plt.subplots()
+ax.bar(rides_per_hr_cs.index, rides_per_hr_cdf, width=1)
+
+x_tick_values = list(range(0,25))
+x_tick_pos = [tick-.5 for tick in x_tick_values]
+
+ax.set_xticks(x_tick_pos)
+ax.set_xticklabels(x_tick_values)
+ax.set_title('Divy-bike Ride CDF');
+```
+
+
+![png](index_files/index_93_0.png)
+
+
+
+```python
+#__SOLUTION__
+# Simple solution
+fig, ax = plt.subplots()
+ax.hist(divy_trips['hour'], cumulative=True, bins=24, density=True)
+```
+
+
+
+
+    (array([0.00404791, 0.00654506, 0.00807239, 0.00919447, 0.01173847,
+            0.02415628, 0.05968793, 0.13569633, 0.23594066, 0.28480136,
+            0.32155816, 0.36652323, 0.41913668, 0.47341568, 0.52679515,
+            0.59331392, 0.69816134, 0.82208406, 0.89483634, 0.93784538,
+            0.96320103, 0.98196712, 0.99338232, 1.        ]),
+     array([ 0.        ,  0.95833333,  1.91666667,  2.875     ,  3.83333333,
+             4.79166667,  5.75      ,  6.70833333,  7.66666667,  8.625     ,
+             9.58333333, 10.54166667, 11.5       , 12.45833333, 13.41666667,
+            14.375     , 15.33333333, 16.29166667, 17.25      , 18.20833333,
+            19.16666667, 20.125     , 21.08333333, 22.04166667, 23.        ]),
+     <a list of 24 Patch objects>)
+
+
+
+
+![png](index_files/index_94_1.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -951,7 +999,7 @@ ax2.set_title('CDF of Male Height in the US')
 
 
 
-![png](index_files/index_95_1.png)
+![png](index_files/index_97_1.png)
 
 
 If we provide numpy with the underlying parameters of our distribution, we can calculate: 
@@ -1018,10 +1066,8 @@ print(box['boxes'][0].get_data())
 
 
 
-![png](index_files/index_102_1.png)
+![png](index_files/index_104_1.png)
 
-
-# Common Discrete Distributions
 
 # 3. Bernouli and Binomial Distributions
 
@@ -1061,7 +1107,7 @@ ax.set_title('Bernouli Distribution of Penalty Kicks')
 
 
 
-![png](index_files/index_108_1.png)
+![png](index_files/index_109_1.png)
 
 
 The expected value is the probability of success, i.e. **.75**
@@ -1093,17 +1139,15 @@ The binomial distribution can tell me what the probability is that the shootout 
 n = 10
 p = 0.75
 fig, ax = plt.subplots(1, 1, figsize=(6, 6))
-x = np.arange(stats.binom.ppf(0.001, n, p),
+x = np.arange(stats.binom.ppf(0.00001, n, p),
               stats.binom.ppf(.99, n, p)+1)
 
-ax.plot(x, stats.binom.pmf(x, n, p), 'bo', ms=8, label='binom pmf')
-ax.vlines(x, 0, stats.binom.pmf(x, n, p), 'r', linewidth=5,
-          label='pmf')
+ax.bar(x, stats.binom.pmf(x, n, p),  label='binom pmf', color='r')
 ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_113_0.png)
+![png](index_files/index_114_0.png)
 
 
 # Code Along
@@ -1169,19 +1213,18 @@ The pmf of the Poisson distribution would be:
 ```python
 rate = 40
 
-
 fig, ax = plt.subplots(1, 1, figsize=(6, 6))
-x = np.arange(stats.poisson.ppf(0.1, rate),
-              stats.poisson.ppf(.99, rate))
+x = np.arange(stats.poisson.ppf(0.001, rate),
+              stats.poisson.ppf(.9999, rate))
 
-ax.plot(x, stats.poisson(rate).pmf(x), 'bo', ms=8, label='binom pmf')
-ax.vlines(x, 0, stats.poisson(rate).pmf(x), 'r', linewidth=5,
+
+ax.bar(x, stats.poisson(rate).pmf(x), color = 'r',
           label='Poisson Distribution:\n Website Hits Over an Hour')
 ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_122_0.png)
+![png](index_files/index_123_0.png)
 
 
 The Poisson distribution has a unique characteristic:
@@ -1198,25 +1241,10 @@ What is the probability of seeing exactly 40 newborns delivered on a given day.
 
 
 ```python
-three_random_students
+three_random_students(student_first_names)
 ```
 
-
-
-
-    <function src.student_caller.three_random_students(student_list, question=None)>
-
-
-
-
-```python
-np.random.seed(42)
-new_choice = np.random.choice(mccalister)
-print(new_choice)
-mccalister.remove(new_choice)
-```
-
-    Jacob
+    ['Ali' 'Sindhu' 'Sam']
 
 
 
@@ -1314,6 +1342,8 @@ Use numpy's random.normal to generate a sample of 1000 women and plot the histog
 
 
 ```python
+#__SOLUTION__
+
 fig, ax = plt.subplots()
 ax.hist(np.random.normal(65, 3.5, 1000))
 ax.set_title('Distribution of Heights of American Women')
