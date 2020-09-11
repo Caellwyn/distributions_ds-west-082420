@@ -119,6 +119,11 @@ ax.set_title('Distribution of Divy Rides per Day')
 ![png](index_files/index_17_1.png)
 
 
+The above plot visualizes an **empirical** distribution. Empirical distributions are based on observations of real world phenomena. 
+
+An a**nalytical** distribution is one which is created by a mathematical function.  We use analytical functions to model real world phenomena. 
+[ThinkStats2e](http://greenteapress.com/thinkstats2/html/thinkstats2006.html)
+
 #### Examples of analytical discrete distributions:
 
 > 1. The Uniform Distribution:- occurs when all possible outcomes are equally likely.
@@ -126,7 +131,7 @@ ax.set_title('Distribution of Divy Rides per Day')
 > 3. The Binomial Distribution - represents the probability of observing a specific number of successes (Bernoulli trials) in a specific number of trials.
 > 4. The Poisson Distribution:- represents the probability of 𝑛 events in a given time period when the overall rate of occurrence is constant.
 
-- Note: an analytical distribution is one which is created by a mathematical function. [ThinkStats2e](http://greenteapress.com/thinkstats2/html/thinkstats2006.html)
+
 
 ## Continuous
 
@@ -182,7 +187,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_25_1.png)
+![png](index_files/index_26_1.png)
 
 
 
@@ -203,7 +208,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_26_1.png)
+![png](index_files/index_27_1.png)
 
 
 
@@ -225,7 +230,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_27_1.png)
+![png](index_files/index_28_1.png)
 
 
 The distinction between descrete and continuous is very important to have in your mind, and can easily be seen in plots. 
@@ -282,7 +287,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_30_0.png)
+![png](index_files/index_31_0.png)
 
 
 
@@ -324,7 +329,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_31_0.png)
+![png](index_files/index_32_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -386,7 +391,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_38_0.png)
+![png](index_files/index_39_0.png)
 
 
 ### Expected Value/Mean
@@ -566,7 +571,7 @@ ax.bar(result_set, roll_probabilities, width=.5)
 
 
 
-![png](index_files/index_57_1.png)
+![png](index_files/index_58_1.png)
 
 
 ## PDF: Probability Density Function
@@ -622,7 +627,7 @@ ax.set_title("Two distributions differing only in mean")
 
 
 
-![png](index_files/index_65_1.png)
+![png](index_files/index_66_1.png)
 
 
 The variance of our plots describes how closely the points are gathered around the mean.  Low variance means tight and skinny, high variance short and wide.
@@ -658,7 +663,7 @@ ax.set_title("Two distributions with different variance")
 
 
 
-![png](index_files/index_67_1.png)
+![png](index_files/index_68_1.png)
 
 
 ## Skew 
@@ -693,7 +698,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_72_0.png)
+![png](index_files/index_73_0.png)
 
 
 
@@ -709,7 +714,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_73_0.png)
+![png](index_files/index_74_0.png)
 
 
 
@@ -726,7 +731,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_74_0.png)
+![png](index_files/index_75_0.png)
 
 
 
@@ -742,7 +747,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_75_0.png)
+![png](index_files/index_76_0.png)
 
 
 ### Transforming  Right/Positively Skewed Data
@@ -794,7 +799,7 @@ ax.set_title("""Divy Bike Ride Time:
 ```
 
 
-![png](index_files/index_81_0.png)
+![png](index_files/index_82_0.png)
 
 
 With a partner, apply an appropriate transformation to reduce the skew of the distribution:
@@ -826,7 +831,7 @@ ax.set_title("Log Transformed Ride Times: {}".format(round(stats.skew(log_ride),
 
 
 
-![png](index_files/index_84_1.png)
+![png](index_files/index_85_1.png)
 
 
 # Kurtosis
@@ -896,7 +901,7 @@ ax.set_xticklabels(x_tick_values);
 ```
 
 
-![png](index_files/index_91_0.png)
+![png](index_files/index_92_0.png)
 
 
 # Pair Program
@@ -933,7 +938,7 @@ ax.set_title('Divy-bike Ride CDF');
 ```
 
 
-![png](index_files/index_93_0.png)
+![png](index_files/index_94_0.png)
 
 
 
@@ -962,7 +967,7 @@ ax.hist(divy_trips['hour'], cumulative=True, bins=24, density=True)
 
 
 
-![png](index_files/index_94_1.png)
+![png](index_files/index_95_1.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -999,7 +1004,7 @@ ax2.set_title('CDF of Male Height in the US')
 
 
 
-![png](index_files/index_97_1.png)
+![png](index_files/index_98_1.png)
 
 
 If we provide numpy with the underlying parameters of our distribution, we can calculate: 
@@ -1066,7 +1071,7 @@ print(box['boxes'][0].get_data())
 
 
 
-![png](index_files/index_104_1.png)
+![png](index_files/index_105_1.png)
 
 
 # 3. Bernouli and Binomial Distributions
@@ -1107,7 +1112,7 @@ ax.set_title('Bernouli Distribution of Penalty Kicks')
 
 
 
-![png](index_files/index_109_1.png)
+![png](index_files/index_110_1.png)
 
 
 The expected value is the probability of success, i.e. **.75**
@@ -1147,7 +1152,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_114_0.png)
+![png](index_files/index_115_0.png)
 
 
 # Code Along
@@ -1224,7 +1229,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_123_0.png)
+![png](index_files/index_124_0.png)
 
 
 The Poisson distribution has a unique characteristic:
@@ -1322,7 +1327,7 @@ ax.plot(z_curve, stats.norm(mu,sigma).pdf(z_curve),
 
 
 
-![png](index_files/index_133_1.png)
+![png](index_files/index_134_1.png)
 
 
 ![](images/normal_2.png)
@@ -1351,7 +1356,7 @@ ax.set_xlabel('Height in Inches');
 ```
 
 
-![png](index_files/index_137_0.png)
+![png](index_files/index_138_0.png)
 
 
 # Standard Normal Distribution
@@ -1380,7 +1385,7 @@ sns.kdeplot(z_dist, ax=ax)
 
 
 
-![png](index_files/index_140_1.png)
+![png](index_files/index_141_1.png)
 
 
 ![](images/empirical_rule.png)
@@ -1449,7 +1454,7 @@ sns.boxplot(df['bmi'])
 
 
 
-![png](index_files/index_149_1.png)
+![png](index_files/index_150_1.png)
 
 
 Using `stats.zscore`,remove all values that fall outside of  2.5 standard deviations on either side of the mean.
@@ -1471,7 +1476,7 @@ ax.set_title('Diabetes BMI with Outliers Removed');
 ```
 
 
-![png](index_files/index_152_0.png)
+![png](index_files/index_153_0.png)
 
 
 
