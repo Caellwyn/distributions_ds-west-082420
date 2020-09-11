@@ -74,6 +74,11 @@ ax.set_title('Distribution of Divy Rides per Day')
 ![png](index_files/index_13_1.png)
 
 
+The above plot visualizes an **empirical** distribution. Empirical distributions are based on observations of real world phenomena. 
+
+An a**nalytical** distribution is one which is created by a mathematical function.  We use analytical functions to model real world phenomena. 
+[ThinkStats2e](http://greenteapress.com/thinkstats2/html/thinkstats2006.html)
+
 #### Examples of analytical discrete distributions:
 
 > 1. The Uniform Distribution:- occurs when all possible outcomes are equally likely.
@@ -81,7 +86,7 @@ ax.set_title('Distribution of Divy Rides per Day')
 > 3. The Binomial Distribution - represents the probability of observing a specific number of successes (Bernoulli trials) in a specific number of trials.
 > 4. The Poisson Distribution:- represents the probability of 𝑛 events in a given time period when the overall rate of occurrence is constant.
 
-- Note: an analytical distribution is one which is created by a mathematical function. [ThinkStats2e](http://greenteapress.com/thinkstats2/html/thinkstats2006.html)
+
 
 ## Continuous
 
@@ -115,7 +120,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_17_1.png)
+![png](index_files/index_18_1.png)
 
 
 
@@ -135,7 +140,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_18_1.png)
+![png](index_files/index_19_1.png)
 
 
 
@@ -156,7 +161,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_19_1.png)
+![png](index_files/index_20_1.png)
 
 
 The distinction between descrete and continuous is very important to have in your mind, and can easily be seen in plots. 
@@ -204,7 +209,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_21_0.png)
+![png](index_files/index_22_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -353,7 +358,7 @@ ax.bar(result_set, roll_probabilities, width=.5)
 
 
 
-![png](index_files/index_38_1.png)
+![png](index_files/index_39_1.png)
 
 
 ## PDF: Probability Density Function
@@ -405,7 +410,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_50_0.png)
+![png](index_files/index_51_0.png)
 
 
 
@@ -420,7 +425,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_51_0.png)
+![png](index_files/index_52_0.png)
 
 
 ### Transforming  Right/Positively Skewed Data
@@ -475,7 +480,7 @@ ax.set_title("Log Transformed Ride Times: {}".format(round(stats.skew(log_ride),
 
 
 
-![png](index_files/index_57_1.png)
+![png](index_files/index_58_1.png)
 
 
 # Kurtosis
@@ -527,7 +532,7 @@ ax.set_xticklabels(x_tick_values);
 ```
 
 
-![png](index_files/index_62_0.png)
+![png](index_files/index_63_0.png)
 
 
 # Pair Program
@@ -563,7 +568,7 @@ ax.set_title('Divy-bike Ride CDF');
 ```
 
 
-![png](index_files/index_64_0.png)
+![png](index_files/index_65_0.png)
 
 
 
@@ -591,7 +596,7 @@ ax.hist(divy_trips['hour'], cumulative=True, bins=24, density=True)
 
 
 
-![png](index_files/index_65_1.png)
+![png](index_files/index_66_1.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -776,7 +781,7 @@ ax.set_xlabel('Height in Inches');
 ```
 
 
-![png](index_files/index_94_0.png)
+![png](index_files/index_95_0.png)
 
 
 # Standard Normal Distribution
@@ -838,5 +843,5 @@ ax.set_title('Diabetes BMI with Outliers Removed');
 ```
 
 
-![png](index_files/index_105_0.png)
+![png](index_files/index_106_0.png)
 
