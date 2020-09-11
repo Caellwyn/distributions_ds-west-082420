@@ -144,14 +144,9 @@ fig, ax = plt.subplots()
 
 no_fliers_rt = divy_trips[divy_trips.ride_time < 2000]
 
-ax.hist(no_fliers_rt.ride_time, bins=50, normed=True);
+ax.hist(no_fliers_rt.ride_time, bins=50, density=True);
 ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 ```
-
-    /Users/johnmaxbarry/.local/lib/python3.7/site-packages/ipykernel_launcher.py:6: MatplotlibDeprecationWarning: 
-    The 'normed' kwarg was deprecated in Matplotlib 2.1 and will be removed in 3.1. Use 'density' instead.
-      
-
 
 
 
@@ -161,7 +156,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_19_2.png)
+![png](index_files/index_19_1.png)
 
 
 The distinction between descrete and continuous is very important to have in your mind, and can easily be seen in plots. 
@@ -346,7 +341,8 @@ Create the pmf of a 12 sided die
 result_set = list(range(1,13))
 roll_probabilities = [1/13 for result in result_set]
 
-plt.bar(result_set, roll_probabilities)
+fig, ax = plt.subplots()
+ax.bar(result_set, roll_probabilities, width=.5)
 ```
 
 
@@ -463,6 +459,25 @@ With a partner, apply an appropriate transformation to reduce the skew of the di
     - Hint: certain transformations don't like zeros
     
 
+
+```python
+fig, ax = plt.subplots()
+log_ride = np.log(divy_trips[divy_trips.ride_time>0]['ride_time'])
+ax.hist(log_ride, bins=50);
+ax.set_title("Log Transformed Ride Times: {}".format(round(stats.skew(log_ride),2)))
+```
+
+
+
+
+    Text(0.5, 1.0, 'Log Transformed Ride Times: -1.35')
+
+
+
+
+![png](index_files/index_57_1.png)
+
+
 # Kurtosis
 
 ![kurtosis](images/kurtosis.png)
@@ -486,31 +501,97 @@ The CDF of the Lotto example plots how likely we are to get a ball less than or 
 Let's create the CDF for our Lotto example
 
 
-# Pair Program
-Taking what we know about cumulative distribution functions, create a plot of the CDF of a fair 12-sided die.
-
-Take this in steps (no pun intended).
-1. Create a list of possible rolls. 
-2. Multiply the probability of each roll by the value of the roll.
-3. Record the cumulative sum of each roll (hint: try np.cumsum()
-
 
 ```python
-fig, ax = plt.subplots()
-rolls = list(range(0,13))
-cumu_probs = np.cumsum([1/12 for number in range(1,13)])
-
-cumu_probs = np.insert(cumu_probs,0,0,axis=0)
-ax.plot(rolls, cumu_probs, 'bo', color='blue')
-# ax.vlines(rolls, 0, cumu_probs, 'r', lw=5)
-for i in range(0,13):
-    ax.hlines(cumu_probs[i], i,i+1, 'r', lw=5,)
-for i in range(0,12):
-    ax.vlines(i+1, cumu_probs[i+1],cumu_probs[i],  linestyles='dotted')
+# align the values
+lotto_dict = {0:0, 1:50, 2:25, 3:15, 4:10}
+values = list(lotto_dict.keys())
+# count the number of values that are less than or equal to the current value
+count_less_than_equal = np.cumsum(list(lotto_dict.values()))
+# divide by total number of values
+prob_less_than_or_equal = count_less_than_equal/sum(lotto_dict.values()) 
 ```
 
 
-![png](index_files/index_61_0.png)
+```python
+fix, ax = plt.subplots()
+ax.bar(values, prob_less_than_or_equal, width=1)
+
+ax.set_title('Lotto CDF')
+
+x_tick_values = list(range(0,6))
+x_tick_pos = [tick-.5 for tick in x_tick_values]
+
+ax.set_xticks(x_tick_pos)
+ax.set_xticklabels(x_tick_values);
+```
+
+
+![png](index_files/index_62_0.png)
+
+
+# Pair Program
+Taking what we know about cumulative distribution functions, create a plot of the CDF of divy bike rides by hour of the day.
+
+Take this in steps (no pun intended).
+1. Count the number of rides per hour.  Hint: Use groupby.
+2. Make sure the hours are arranged from earliest to latest.
+3. Calculate the cumulative sum after each hour (hint: try np.cumsum())
+4. Use a list comprehension or for loop to divide each hours cumsum by the total.
+5. Create a bar plot in matplotlib.
+6. Fix the x-ticks to be positioned at the beginning of each bar
+
+
+
+```python
+
+rides_per_hr = divy_trips.groupby('hour').count()['ride_id']
+
+rides_per_hr_cs = rides_per_hour.cumsum()
+
+rides_per_hr_cdf = [hour_count/rides_per_hr_cs[23] for hour_count in rides_per_hr_cs]
+
+fig, ax = plt.subplots()
+ax.bar(rides_per_hr_cs.index, rides_per_hr_cdf, width=1)
+
+x_tick_values = list(range(0,25))
+x_tick_pos = [tick-.5 for tick in x_tick_values]
+
+ax.set_xticks(x_tick_pos)
+ax.set_xticklabels(x_tick_values)
+ax.set_title('Divy-bike Ride CDF');
+```
+
+
+![png](index_files/index_64_0.png)
+
+
+
+```python
+# Simple solution
+fig, ax = plt.subplots()
+ax.hist(divy_trips['hour'], cumulative=True, bins=24, density=True)
+```
+
+
+
+
+    (array([0.00404791, 0.00654506, 0.00807239, 0.00919447, 0.01173847,
+            0.02415628, 0.05968793, 0.13569633, 0.23594066, 0.28480136,
+            0.32155816, 0.36652323, 0.41913668, 0.47341568, 0.52679515,
+            0.59331392, 0.69816134, 0.82208406, 0.89483634, 0.93784538,
+            0.96320103, 0.98196712, 0.99338232, 1.        ]),
+     array([ 0.        ,  0.95833333,  1.91666667,  2.875     ,  3.83333333,
+             4.79166667,  5.75      ,  6.70833333,  7.66666667,  8.625     ,
+             9.58333333, 10.54166667, 11.5       , 12.45833333, 13.41666667,
+            14.375     , 15.33333333, 16.29166667, 17.25      , 18.20833333,
+            19.16666667, 20.125     , 21.08333333, 22.04166667, 23.        ]),
+     <a list of 24 Patch objects>)
+
+
+
+
+![png](index_files/index_65_1.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -531,8 +612,6 @@ If we provide numpy with the underlying parameters of our distribution, we can c
 We can also calculate the value associated with a specfic percentile:
 
 And from there, the value of ranges, such as the interquartile range:
-
-# Common Discrete Distributions
 
 # 3. Bernouli and Binomial Distributions
 
@@ -687,6 +766,19 @@ suppose the average height of an American woman is 65 inches with a standard dev
 Use numpy's random.normal to generate a sample of 1000 women and plot the histogram of the sample.
 
 
+
+```python
+
+fig, ax = plt.subplots()
+ax.hist(np.random.normal(65, 3.5, 1000))
+ax.set_title('Distribution of Heights of American Women')
+ax.set_xlabel('Height in Inches');
+```
+
+
+![png](index_files/index_94_0.png)
+
+
 # Standard Normal Distribution
 
 A standard normal distribution has a mean of 0 and variance of 1. This is also known as a z distribution. 
@@ -746,5 +838,5 @@ ax.set_title('Diabetes BMI with Outliers Removed');
 ```
 
 
-![png](index_files/index_101_0.png)
+![png](index_files/index_105_0.png)
 
