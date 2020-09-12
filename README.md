@@ -52,21 +52,9 @@ Let's take a moment to look back at the Divy data we encountered in our visualiz
 
 
 ```python
-! curl https://divvy-tripdata.s3.amazonaws.com/Divvy_Trips_2020_Q1.zip -o 'data/divy_2020_Q1.zip'
-! unzip data/divy_2020_Q1.zip -d data
+# ! curl https://divvy-tripdata.s3.amazonaws.com/Divvy_Trips_2020_Q1.zip -o 'data/divy_2020_Q1.zip'
+# ! unzip data/divy_2020_Q1.zip -d data
 ```
-
-      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                     Dload  Upload   Total   Spent    Left  Speed
-     35 15.1M   35 5473k    0     0  2929k      0  0:00:05  0:00:01  0:00:04 2928k^C
-    Archive:  data/divy_2020_Q1.zip
-      End-of-central-directory signature not found.  Either this file is not
-      a zipfile, or it constitutes one disk of a multi-part archive.  In the
-      latter case the central directory and zipfile comment will be found on
-      the last disk(s) of this archive.
-    unzip:  cannot find zipfile directory in one of data/divy_2020_Q1.zip or
-            data/divy_2020_Q1.zip.zip, and cannot find data/divy_2020_Q1.zip.ZIP, period.
-
 
 
 ```python
@@ -476,7 +464,7 @@ z_curve = np.random.normal(0,1, 1000)
 print(stats.skew(z_curve))
 ```
 
-    -0.06251369362484344
+    -0.04110511329255147
 
 
 To add right skew to the data, let's add some outliers to the left of the mean.
@@ -728,12 +716,14 @@ print(box['boxes'][0].get_data())
 ```
 
     interquartile range 67.97653074941175 - 72.02346925058825
-    (array([0.925, 1.075, 1.075, 0.925, 0.925]), array([68.00893806, 68.00893806, 72.09126527, 72.09126527, 68.00893806]))
+    (array([0.925, 1.075, 1.075, 0.925, 0.925]), array([68.0285745 , 68.0285745 , 72.04366153, 72.04366153, 68.0285745 ]))
 
 
 
 ![png](index_files/index_89_1.png)
 
+
+![break](https://media.giphy.com/media/mX3Pf78rXsfxrUDNwi/giphy.gif)
 
 # 3. Bernouli and Binomial Distributions
 
@@ -746,39 +736,184 @@ The simplest example is, once again, a coin flip.  In this scenario, we define e
 
 ![](images/bernouli.png)
 
-Another example would be a penalty kick in soccer.
+Another example would be the chance a nohitter would occur in a baseball game.
 
-![panenka](https://media.giphy.com/media/Jy1R6jdp8uXok/giphy.gif)
+![no_hitter](https://media.giphy.com/media/nTbCRLw5ZPWBa/giphy.gif)
 
-Let's assume the probability of scoring a goal is .75, the Bernouli distribution is:
+We will scrape data from the web for this example:
 
 
 ```python
-# probability of scoring
-p = .75
-# probability of missing
-q = 1 -.75
+import requests 
+response = requests.get('https://en.wikipedia.org/wiki/List_of_Major_League_Baseball_no-hitters')
 
-fig, ax = plt.subplots()
-ax.bar(['miss', 'score'],[q,p], color=['red','green'])
-ax.set_title('Bernouli Distribution of Penalty Kicks')
+# Scrape the wikipedia table corresponding to no-hitters
+no_hit_table = pd.read_html('https://en.wikipedia.org/wiki/List_of_Major_League_Baseball_no-hitters')[1]
+
+# for demonstration, look at games from 1998, which all had 162 games for 30 teams. The game count is approximately 2430 games
+no_hit_table['Date'] = pd.to_datetime(no_hit_table['Date'])
+no_hit_table['Year'] = no_hit_table.Date.apply(lambda x: x.year)
+
+# Don't count 2020 given it is currently under way.
+no_hit_table_1998= no_hit_table[(no_hit_table["Date"] >= "1998") & (no_hit_table["Date"] < "2020")]
+
+no_hit_table_1998.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>#</th>
+      <th>Date</th>
+      <th>Pitcher</th>
+      <th>Team</th>
+      <th>RS</th>
+      <th>Opponent</th>
+      <th>RA</th>
+      <th>League</th>
+      <th>Catcher</th>
+      <th>Notes</th>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>246</th>
+      <td>245.0</td>
+      <td>1998-05-17</td>
+      <td>David Wells</td>
+      <td>New York Yankees</td>
+      <td>4</td>
+      <td>Minnesota Twins</td>
+      <td>0</td>
+      <td>AL</td>
+      <td>Jorge Posada</td>
+      <td>[notes 142]</td>
+      <td>1998</td>
+    </tr>
+    <tr>
+      <th>247</th>
+      <td>246.0</td>
+      <td>1999-06-25</td>
+      <td>José Jiménez</td>
+      <td>St. Louis Cardinals</td>
+      <td>1</td>
+      <td>Arizona Diamondbacks</td>
+      <td>0</td>
+      <td>NL</td>
+      <td>Alberto Castillo</td>
+      <td>[notes 143]</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>248</th>
+      <td>247.0</td>
+      <td>1999-07-18</td>
+      <td>David Cone</td>
+      <td>New York Yankees (AL)</td>
+      <td>6</td>
+      <td>Montreal Expos (NL)</td>
+      <td>0</td>
+      <td>Inter</td>
+      <td>Joe Girardi (2)</td>
+      <td>[notes 144]</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>249</th>
+      <td>248.0</td>
+      <td>1999-09-11</td>
+      <td>Eric Milton</td>
+      <td>Minnesota Twins</td>
+      <td>7</td>
+      <td>Anaheim Angels</td>
+      <td>0</td>
+      <td>AL</td>
+      <td>Terry Steinbach (2)</td>
+      <td>NaN</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>250</th>
+      <td>249.0</td>
+      <td>2001-04-04</td>
+      <td>Hideo Nomo (2)</td>
+      <td>Boston Red Sox</td>
+      <td>3</td>
+      <td>Baltimore Orioles</td>
+      <td>0</td>
+      <td>AL</td>
+      <td>Jason Varitek (1)</td>
+      <td>[notes 145]</td>
+      <td>2001</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+To create a Bernouli distribution from the above data, we have to calculate the probability of a no-hitter occuring in a single trial.  In this scenario, a trial is a single game.`
+
+
+```python
+# plot Bernouli distribution of no hitter
+
+# probability of scoring
+p = p_no_hitter
+# probability of missing
+q = 1 - p_no_hitter
+
+fig, ax = plt.subplots(figsize=(10,10))
+ax.bar(['hitter', 'no hitter'],[q,p], color=['red','green'])
+ax.set_title('Bernouli Distribution of No Hitters')
 
 ```
 
 
 
 
-    Text(0.5, 1.0, 'Bernouli Distribution of Penalty Kicks')
+    Text(0.5, 1.0, 'Bernouli Distribution of No Hitters')
 
 
 
 
-![png](index_files/index_94_1.png)
+![png](index_files/index_97_1.png)
 
 
-The expected value is the probability of success, i.e. **.75**
+
+```python
+(p_no_hitter)*(1-p_no_hitter)
+```
+
+
+
+
+    0.0011447626555435414
+
+
+
+The expected value is the probability of success, i.e. **.001146**  
 The variance is:  
-$\sigma^2 = (.75)*(1-.75) = .1875 $
+$\sigma^2 = (p\_no\_hitter)*(1-p\_no\_hitter) = .001147 $
 
 ## Binomial
 
@@ -796,108 +931,123 @@ $\Large f(x) = {n \choose k}p^k(1 - p)^{n - k}$
 
 Note: ${n\choose k} = \frac{n!}{k!(n - k)!}$, the number of ways of choosing $k$ objects from a total of $n$.
 
-In our penalty kick example. Suppose we take for example a 10-kick penalty shoot after a extra time runs out.
+## Coin Flip Code Along
+To get our feet wet with the multinomial, let's look at the traditional coin flip example.
 
-The binomial distribution can tell me what the probability is that the shootout will result in exactly exactly $k$ goals out of $n$ shots ($k < n$).
+![coin_flip](https://media.giphy.com/media/Q8gsDmBzmNkKE9DVsg/giphy.gif)
+
+Let's code out the probability mass distribution of observing a certain number of heads in sets of 10 flips of a fair coin.
+
+
 
 
 ```python
-n = 10
-p = 0.75
-fig, ax = plt.subplots(1, 1, figsize=(6, 6))
-x = np.arange(stats.binom.ppf(0.00001, n, p),
-              stats.binom.ppf(.99, n, p)+1)
+#  What is the probability of a succesful trial (p)?
 
-ax.bar(x, stats.binom.pmf(x, n, p),  label='binom pmf', color='r')
-ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_99_0.png)
-
-
-# Code Along
-What is the probability of a team scoring 7 goals in a shootout?
-
-
-
 ```python
-three_random_students(student_first_names)
+#  How many trials constitute one round of our experiment (k)? 
+
 ```
 
-    ['Sam' 'Jeffrey' 'Ozair']
+
+```python
+# What is our set of possible outcomes?
+
+```
+
+While it may be evident what the set of possible outcomes is, often that is not the case.  We can use stats.binom.ppf() to create a the set of outcomes. 
+
+**stats.binom.ppf** returns the outcome associated with a given percentage of the cdf. We can then use np.arange to create the set of outcomes associated with a range of percentages.  In this case, we can reproduce the range of using a very low and high percentage.
 
 
 
 ```python
-# Start
+# Possible outcomes using ppf
+
+```
+
+
+```python
+# What probability is associated with each outcome?
+
+```
+
+
+```python
+# Plot the pmf
+
+```
+
+# Pair Programming (12 minutes)
+
+We will expand on our no hitter example from above, modeling the probability of the number of no-hitters occuring over an entire season's worth of games.  
+
+In pairs, you will create the PMF and CDF of the multinomial distribution of our no-hitter example.  
+
+To get started, 
+
+     1. calculate the expected value and the variance of the distribution.
+       - to do so, you must define n (number of trials) and p (the probability of a no-hitter in one trial).  
+       
+     2. Create a range of results (i.e. an ordinal set of counts of nohitters per season) using np.arange and stats.binomial.ppf()
+     
+     3. Create probabilities associated with each result using stats.binom.ppf
+     
+     4. Create a bar plot of the probabilities associated with each no-hitter count
+     
+
+
+
+
+
+```python
+# 1. calculate the expected value and the variance of the distribution.
+
 n = None
-k = None
 p = None
+
+expected_value = None
+variance = None
+
+print("We expect {} no hitters across a season".format(round(expected_value,5)))
+print("The variance of the nohitter distribution is {}".format(round(variance, 5)))
 ```
 
-# 4. Poisson Distribution
 
-The Poisson distribution describes the probability of a certain number of a specific event occuring over a given interval. We assume that these events occur at a constant rate and independently.
+    ---------------------------------------------------------------------------
 
-Examples are:
-- number of visitors to a website over an hour
-- number of pieces of mail arriving at your door per day over a month
-- number of births in a hospital per day
+    TypeError                                 Traceback (most recent call last)
+
+    <ipython-input-221-ef10cd6a7190> in <module>
+          7 variance = None
+          8 
+    ----> 9 print("We expect {} no hitters across a season".format(round(expected_value,5)))
+         10 print("The variance of the nohitter distribution is {}".format(round(variance, 5)))
 
 
-Shape of the Poisson Distribution is governed by the rate parameter lambda:
-
-$\Large\lambda = \frac{Avg\ number\ of\ events}{period\ of\ time}$
-
-${\displaystyle P(k)= {\frac {\lambda ^{k}e^{-\lambda }}{k!}}}$
-
-Consider the scenario where a website receives 200 hits per hour.
-
-The pmf of the Poisson distribution would be:
+    TypeError: type NoneType doesn't define __round__ method
 
 
 
 ```python
-rate = 40
-
-fig, ax = plt.subplots(1, 1, figsize=(6, 6))
-x = np.arange(stats.poisson.ppf(0.001, rate),
-              stats.poisson.ppf(.9999, rate))
-
-
-ax.bar(x, stats.poisson(rate).pmf(x), color = 'r',
-          label='Poisson Distribution:\n Website Hits Over an Hour')
-ax.legend(loc='best');
+# 2. Create a range of results using np.arrange and stats.binomial.ppf()
+x = None
 ```
 
 
-![png](index_files/index_107_0.png)
-
-
-The Poisson distribution has a unique characteristic:
-    
-$\Large\mu = \sigma^2 = \lambda$
-
-# Code Along
-
-Northwestern Memorial is a very busy hospital.  The doctors there deliver, on average, 30 newborns per day.
-
-Assume that newborns arrive at a constant rate and independently.
-
-What is the probability of seeing exactly 40 newborns delivered on a given day.
-
-
 ```python
-three_random_students(student_first_names)
+# 3. Create probabilities associated with each result using stats.binom.ppf
+
+p_binom = None
 ```
 
-    ['Ali' 'Sindhu' 'Sam']
-
-
 
 ```python
-# Code here
+# 4. Create a bar plot of the probabilities associated with each no-hitter count
+
 ```
 
 # 4. Normal Distribution
@@ -948,12 +1098,12 @@ ax.plot(z_curve, stats.norm(mu,sigma).pdf(z_curve),
 
 
 
-    [<matplotlib.lines.Line2D at 0x1a1dcd6cf8>]
+    [<matplotlib.lines.Line2D at 0x11d1b8390>]
 
 
 
 
-![png](index_files/index_116_1.png)
+![png](index_files/index_121_1.png)
 
 
 ![](images/normal_2.png)
@@ -992,12 +1142,12 @@ sns.kdeplot(z_dist, ax=ax)
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a1ed264e0>
+    <matplotlib.axes._subplots.AxesSubplot at 0x11c2d70f0>
 
 
 
 
-![png](index_files/index_122_1.png)
+![png](index_files/index_127_1.png)
 
 
 ![](images/empirical_rule.png)
@@ -1043,12 +1193,12 @@ sns.boxplot(df['bmi'])
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a1df426d8>
+    <matplotlib.axes._subplots.AxesSubplot at 0x122d95278>
 
 
 
 
-![png](index_files/index_130_1.png)
+![png](index_files/index_135_1.png)
 
 
 Using `stats.zscore`,remove all values that fall outside of  2.5 standard deviations on either side of the mean.
@@ -1056,6 +1206,70 @@ Using `stats.zscore`,remove all values that fall outside of  2.5 standard deviat
 
 ```python
 # Your code here
+```
+
+# Bonus: Poisson Distribution
+
+The Poisson distribution describes the probability of a certain number of a specific event occuring over a given interval. We assume that these events occur at a constant rate and independently.
+
+Examples are:
+- number of visitors to a website over an hour
+- number of pieces of mail arriving at your door per day over a month
+- number of births in a hospital per day
+
+
+Shape of the Poisson Distribution is governed by the rate parameter lambda:
+
+$\Large\lambda = \frac{Avg\ number\ of\ events}{period\ of\ time}$
+
+${\displaystyle P(k)= {\frac {\lambda ^{k}e^{-\lambda }}{k!}}}$
+
+Consider the scenario where a website receives 200 hits per hour.
+
+The pmf of the Poisson distribution would be:
+
+
+
+```python
+rate = 40
+
+fig, ax = plt.subplots(1, 1, figsize=(6, 6))
+x = np.arange(stats.poisson.ppf(0.001, rate),
+              stats.poisson.ppf(.9999, rate))
+
+
+ax.bar(x, stats.poisson(rate).pmf(x), color = 'r',
+          label='Poisson Distribution:\n Website Hits Over an Hour')
+ax.legend(loc='best');
+```
+
+
+![png](index_files/index_142_0.png)
+
+
+The Poisson distribution has a unique characteristic:
+    
+$\Large\mu = \sigma^2 = \lambda$
+
+# Code Along
+
+Northwestern Memorial is a very busy hospital.  The doctors there deliver, on average, 30 newborns per day.
+
+Assume that newborns arrive at a constant rate and independently.
+
+What is the probability of seeing exactly 40 newborns delivered on a given day.
+
+
+```python
+three_random_students(student_first_names)
+```
+
+    ['Ali' 'Sindhu' 'Sam']
+
+
+
+```python
+# Code here
 ```
 
 
