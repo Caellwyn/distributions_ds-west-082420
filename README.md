@@ -552,12 +552,12 @@ Take this in steps (no pun intended).
 
 rides_per_hr = divy_trips.groupby('hour').count()['ride_id']
 
-rides_per_hr_cs = rides_per_hour.cumsum()
+rides_per_hr_cs = rides_per_hr.cumsum()
 
 rides_per_hr_cdf = [hour_count/rides_per_hr_cs[23] for hour_count in rides_per_hr_cs]
 
 fig, ax = plt.subplots()
-ax.bar(rides_per_hr_cs.index, rides_per_hr_cdf, width=1)
+ax.bar(rides_per_hr_cs.index, rides_per_hr_cdf, width=.8)
 
 x_tick_values = list(range(0,25))
 x_tick_pos = [tick-.5 for tick in x_tick_values]
@@ -618,6 +618,8 @@ We can also calculate the value associated with a specfic percentile:
 
 And from there, the value of ranges, such as the interquartile range:
 
+![break](https://media.giphy.com/media/mX3Pf78rXsfxrUDNwi/giphy.gif)
+
 # 3. Bernouli and Binomial Distributions
 
 The Bernouli distribution is the discrete distribution that describes a two-outcome trial, such as heads or tails.  The distribution is described by the probability of one random variable of the value 1 associated with the probability p, and its correlary, the probability q, associated with 0  and taking the probability 1-p. 
@@ -629,15 +631,66 @@ The simplest example is, once again, a coin flip.  In this scenario, we define e
 
 ![](images/bernouli.png)
 
-Another example would be a penalty kick in soccer.
+Another example would be the chance a nohitter would occur in a baseball game.
 
-![panenka](https://media.giphy.com/media/Jy1R6jdp8uXok/giphy.gif)
+![no_hitter](https://media.giphy.com/media/nTbCRLw5ZPWBa/giphy.gif)
 
-Let's assume the probability of scoring a goal is .75, the Bernouli distribution is:
+We will scrape data from the web for this example:
 
-The expected value is the probability of success, i.e. **.75**
+To create a Bernouli distribution from the above data, we have to calculate the probability of a no-hitter occuring in a single trial.  In this scenario, a trial is a single game.`
+
+
+```python
+
+# Calculate the number of total games that have occured, assuming 2430 games per season
+seasons = list(range(1998, 2020))
+seasons = len(seasons)
+
+total_games = seasons*2340
+total_games
+
+```
+
+
+
+
+    51480
+
+
+
+
+```python
+# Count the number of no hitters
+no_hitter_count = no_hit_table_1998.shape[0]
+no_hitter_count
+```
+
+
+
+
+    59
+
+
+
+
+```python
+# divide number of no hitters by the number of total games
+
+p_no_hitter = no_hitter_count/total_games
+
+p_no_hitter
+```
+
+
+
+
+    0.0011460761460761462
+
+
+
+The expected value is the probability of success, i.e. **.001146**  
 The variance is:  
-$\sigma^2 = (.75)*(1-.75) = .1875 $
+$\sigma^2 = (p\_no\_hitter)*(1-p\_no\_hitter) = .001147 $
 
 ## Binomial
 
@@ -655,78 +708,161 @@ $\Large f(x) = {n \choose k}p^k(1 - p)^{n - k}$
 
 Note: ${n\choose k} = \frac{n!}{k!(n - k)!}$, the number of ways of choosing $k$ objects from a total of $n$.
 
-In our penalty kick example. Suppose we take for example a 10-kick penalty shoot after a extra time runs out.
+## Coin Flip Code Along
+To get our feet wet with the multinomial, let's look at the traditional coin flip example.
 
-The binomial distribution can tell me what the probability is that the shootout will result in exactly exactly $k$ goals out of $n$ shots ($k < n$).
+![coin_flip](https://media.giphy.com/media/Q8gsDmBzmNkKE9DVsg/giphy.gif)
 
-# Code Along
-What is the probability of a team scoring 7 goals in a shootout?
+Let's code out the probability mass distribution of observing a certain number of heads in sets of 10 flips of a fair coin.
+
+
+
+While it may be evident what the set of possible outcomes is, often that is not the case.  We can use stats.binom.ppf() to create a the set of outcomes. 
+
+**stats.binom.ppf** returns the outcome associated with a given percentage of the cdf. We can then use np.arange to create the set of outcomes associated with a range of percentages.  In this case, we can reproduce the range of using a very low and high percentage.
 
 
 
 ```python
+#  What is the probability of a succesful trial (p)?
+p_heads = .5
+```
+
+
+```python
+#  How many trials constitute one round of our experiment (k)? 
 n = 10
-k = 7
-p = .75
-
-n_choose_k = (np.math.factorial(n))/(np.math.factorial(k)* np.math.factorial(n-k))
-n_choose_k * p**(k)*(1-p)**(n-k)
 ```
-
-
-
-
-    0.25028228759765625
-
-
-
-# 4. Poisson Distribution
-
-The Poisson distribution describes the probability of a certain number of a specific event occuring over a given interval. We assume that these events occur at a constant rate and independently.
-
-Examples are:
-- number of visitors to a website over an hour
-- number of pieces of mail arriving at your door per day over a month
-- number of births in a hospital per day
-
-
-Shape of the Poisson Distribution is governed by the rate parameter lambda:
-
-$\Large\lambda = \frac{Avg\ number\ of\ events}{period\ of\ time}$
-
-${\displaystyle P(k)= {\frac {\lambda ^{k}e^{-\lambda }}{k!}}}$
-
-Consider the scenario where a website receives 200 hits per hour.
-
-The pmf of the Poisson distribution would be:
-
-
-The Poisson distribution has a unique characteristic:
-    
-$\Large\mu = \sigma^2 = \lambda$
-
-# Code Along
-
-Northwestern Memorial is a very busy hospital.  The doctors there deliver, on average, 30 newborns per day.
-
-Assume that newborns arrive at a constant rate and independently.
-
-What is the probability of seeing exactly 40 newborns delivered on a given day.
 
 
 ```python
-k = 40
-lam = 30
+# What is our set of possible outcomes?
 
-(lam**k*np.e**-lam)/(np.math.factorial(k))
+k_set = list(range(0,11))
 
+# or
+
+
+start = stats.binom(n, p_heads).ppf(.0001)
+stop = stats.binom(n, p_heads).ppf(1)
+
+k_set = np.arange(start, stop+1)
+k_set
 ```
 
 
 
 
-    0.013943463479967761
+    array([ 0.,  1.,  2.,  3.,  4.,  5.,  6.,  7.,  8.,  9., 10.])
 
+
+
+
+```python
+# What probability is associated with each outcome?
+
+probs_k = stats.binom.pmf(k_set, n, p_heads)
+```
+
+
+```python
+# Plot the pmf
+fig, ax = plt.subplots()
+ax.bar(k_set, probs_k)
+```
+
+
+
+
+    <BarContainer object of 11 artists>
+
+
+
+
+![png](index_files/index_92_1.png)
+
+
+# Pair Programming (12 minutes)
+
+We will expand on our no hitter example from above, modeling the probability of the number of no-hitters occuring over an entire season's worth of games.  
+
+In pairs, you will create the PMF and CDF of the multinomial distribution of our no-hitter example.  
+
+To get started, 
+
+     1. calculate the expected value and the variance of the distribution.
+       - to do so, you must define n (number of trials) and p (the probability of a no-hitter in one trial).  
+       
+     2. Create a range of results (i.e. an ordinal set of counts of nohitters per season) using np.arange and stats.binomial.ppf()
+     
+     3. Create probabilities associated with each result using stats.binom.ppf
+     
+     4. Create a bar plot of the probabilities associated with each no-hitter count
+     
+
+
+
+
+
+```python
+# 1. calculate the expected value and the variance of the distribution.
+
+n = 2340
+p = p_no_hitter
+
+expected_value = n*p
+variance = n*p*(1-p)
+
+print("We expect {} no hitters across a season".format(round(expected_value,5)))
+print("The variance of the nohitter distribution is {}".format(round(variance, 5)))
+```
+
+    We expect 2.68182 no hitters across a season
+    The variance of the nohitter distribution is 2.67874
+
+
+
+```python
+# 2. Create a range of results using np.arrange and stats.binomial.ppf()
+x = np.arange(stats.binom(n,p).ppf(.00001), stats.binom.ppf(.9999,n,p))
+x
+```
+
+
+
+
+    array([ 0.,  1.,  2.,  3.,  4.,  5.,  6.,  7.,  8.,  9., 10.])
+
+
+
+
+```python
+# 3. Create probabilities associated with each result using stats.binom.ppf
+
+p_binom = stats.binom.pmf(x, 2340, p)
+p_binom
+```
+
+
+
+
+    array([0.06833343, 0.18346811, 0.24619108, 0.2201441 , 0.14757652,
+           0.07911004, 0.03532472, 0.01351428, 0.00452199, 0.00134439,
+           0.00035957])
+
+
+
+
+```python
+# 4. Create a bar plot of the probabilities associated with each no-hitter count
+fig, ax = plt.subplots()
+ax.bar(x, p_binom)
+ax.set_title('Probability of Number of No-Hitters\n Across an MLB Season')
+ax.set_xlabel('Number of No-Hitters');
+```
+
+
+![png](index_files/index_97_0.png)
 
 
 # 4. Normal Distribution
@@ -781,7 +917,7 @@ ax.set_xlabel('Height in Inches');
 ```
 
 
-![png](index_files/index_95_0.png)
+![png](index_files/index_104_0.png)
 
 
 # Standard Normal Distribution
@@ -843,5 +979,54 @@ ax.set_title('Diabetes BMI with Outliers Removed');
 ```
 
 
-![png](index_files/index_106_0.png)
+![png](index_files/index_115_0.png)
+
+
+# Bonus: Poisson Distribution
+
+The Poisson distribution describes the probability of a certain number of a specific event occuring over a given interval. We assume that these events occur at a constant rate and independently.
+
+Examples are:
+- number of visitors to a website over an hour
+- number of pieces of mail arriving at your door per day over a month
+- number of births in a hospital per day
+
+
+Shape of the Poisson Distribution is governed by the rate parameter lambda:
+
+$\Large\lambda = \frac{Avg\ number\ of\ events}{period\ of\ time}$
+
+${\displaystyle P(k)= {\frac {\lambda ^{k}e^{-\lambda }}{k!}}}$
+
+Consider the scenario where a website receives 200 hits per hour.
+
+The pmf of the Poisson distribution would be:
+
+
+The Poisson distribution has a unique characteristic:
+    
+$\Large\mu = \sigma^2 = \lambda$
+
+# Code Along
+
+Northwestern Memorial is a very busy hospital.  The doctors there deliver, on average, 30 newborns per day.
+
+Assume that newborns arrive at a constant rate and independently.
+
+What is the probability of seeing exactly 40 newborns delivered on a given day.
+
+
+```python
+k = 40
+lam = 30
+
+(lam**k*np.e**-lam)/(np.math.factorial(k))
+
+```
+
+
+
+
+    0.013943463479967761
+
 
