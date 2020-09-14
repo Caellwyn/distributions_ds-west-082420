@@ -16,22 +16,10 @@
 
 The distributions we introduce today will reappear throughout the bootcamp.  They will:
 
-1. Allow us to conduct statistical tests to judge the validity of our conclusions.  As a data scientist at your company, you may be asked to judge whether a certain change to the user interface of your website increases conversion rate. 
+1. Allow us to conduct statistical tests to judge the validity of our conclusions.  As a data scientist at your company, you may be asked to perform various scientific tests. For example, you may be asked to judge whether a certain change to the user interface of your website increases conversion rate. 
 2. Provide the foundation for specific assumptions of linear regression.
 3. Appear in the cost functions tied to logistic regression and other models.
 4. Drive the classification decisions made in parametric models, such as Naive-Bayes. 
-
-# Activation
-
-![king_county](images/king_county.png)
-
-
-<p> A probability distribution describes the probability of an event in a sample space.  We recently finished a project investigating opportunity youth in Seattle's King County.  Considering the idea that a distribution can be the probability of any variable, what interesting distributions did you come across?  For example, you most likely looked at the fraction of opportunity youth in South King County vs. youth that fall outside of that category.  The probability that a youth is an opportunity youth, and the corresponding probability that a youth is not an opportunity you, is probability distribution. </p>
-
-
-#### Group Discussion Answers
-
-\>  
 
 
 
@@ -45,6 +33,19 @@ We will learn about a variety of different probability distributions, but before
 ![](images/uniform.png)
 
 > - There are 6 possible outcomes of the roll.  In other words, 4.5 cannot be an outcome. As you see on the PMF plot, the bars which represent probability do not touch, suggesting non-integer numbers between 1 and 6 are not possible results.
+
+### Let's think back to our Phase 1 projects: What are some examples of discrete probability distributions in either the King County or Movie datasets?
+
+your answer here
+
+
+```python
+#__SOLUTIONS__
+# probability of a youth in SKC being an opportunity youth vs not
+# Probability of an opporunity youth in SKC having a certain level of education.
+# Probability distribution of of movies that have more than 500 reviews across genres
+# Probability distribution of movies making over 25 million across studios.
+```
 
 Let's take a moment to look back at the Divy data we encountered in our visualizations lesson.
 
@@ -111,6 +112,8 @@ With a continous distribution, the set of possible results is an infinite set of
 > 3. Exponential
 
 
+### What are examples of continuous probability distributions in the SKC and movie datasets?
+
 
 ```python
 # Let's take the data above, and inspect and plot a continuous variable: ride time.
@@ -152,9 +155,9 @@ import numpy as np
 ```python
 
 title_1 = "height_of_us_women in inches"
-title_2 = 'result of flipping a coin 100 times'
-title_3 = 'result of rolling a 20 sided dice 1000 times'
-title_4 = 'the length of time from today a computer part lasts'
+title_2 = 'outcomes of flipping a coin 100 times'
+title_3 = 'outcomes of rolling a 20 sided die 1000 times'
+title_4 = 'probability that a computer part lasts a certain amount of time from now.
 title_5 = 'probability that a picture is a chihauhua\n, a muffin, a bird, or a piece of pizza\n as would guess a neural network'
 title_6 = 'probability of rolling a value equal to or below\n a certain number on a 20 sided dice'
 no_title = 'no_title'
@@ -186,7 +189,11 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_27_0.png)
+      File "<ipython-input-49-8ef349ae5c7e>", line 4
+        title_4 = 'probability that a computer part lasts a certain amount of time from now.
+                                                                                            ^
+    SyntaxError: EOL while scanning string literal
+
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -232,7 +239,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_33_0.png)
+![png](index_files/index_34_0.png)
 
 
 ### Expected Value/Mean
@@ -274,7 +281,7 @@ For our Lotto PMF, that means:
  $ \Large E((X-\mu)^2) = \sigma^2 = \Sigma^n_{i=1}p(x_i)(x_i - \mu)^2$
 
 # Student input:
-Help me calculate the variance for the Lotto Ball example
+Let's calculate the variance for the Lotto Ball example
 
 
 
@@ -282,37 +289,43 @@ Help me calculate the variance for the Lotto Ball example
 # Code
 ```
 
-## Uniform Distribution
+# Pair Program 7 minutes
 
-The uniform distribution describes a set of discrete outcomes whose probabilities are all equally likely.
+The **uniform** distribution describes a set of discrete outcomes whose probabilities are all equally likely.
 
 A common example is the roll of a die.  
 
 ![dice](https://media.giphy.com/media/3ohhwLh5dw0i7iLzOg/giphy.gif)
 
-The pmf of a discrete uniform distribution is simply:
 
-$ f(x)=\frac{1}{n} $
 
-Let's take the example of a twelve-sided die.  
+For the following pair programming challenge, you are tasked with:
 
-The probability for rolling any number, is 1/12.
+    1. Calculating the expected value of a 12-sided die roll using the above equations.
+    2. Calculating the variance and standard deviation of the 12-sided die roll using the above equations.
+    3. Plot the pmf of the 12-sided die roll.
 
 
 ```python
-# expected value for a roll of a six-side die
-expected_value = sum([1/12 * n for n in range(1,13)])
-print(f'Expected value: {expected_value}')
-# variance for a roll of a six-sided die
-variance = sum([1/12 *(n - expected_value)**2 for n in range(1,13)])
-print(f'Variance: {variance}')
+# Your code here
+expected_value = None
 ```
 
-    Expected value: 6.5
-    Variance: 11.916666666666664
+
+```python
+# Your code here
+variance = None
+standard_deviation = None
+```
 
 
-We can also calcalate the mean as follows:  
+```python
+# Your code here
+```
+
+To check your answers, use the formulae below.
+
+
 $\Large E(X)=\frac{a+b}{2}$
 
 Where a is the lowest value and b is the highest. 
@@ -349,16 +362,10 @@ round(variance,7) == round(((12-1+1)**2-1)/12, 7)
 
 
 
-![pear](https://media.giphy.com/media/fBS9UfNnOtkVDqR70I/giphy.gif)
+The pmf of a discrete uniform distribution is simply:
 
-# Short pair programming (2 minutes)
-Create the pmf of a 12 sided die
+$ f(x)=\frac{1}{n} $
 
-
-```python
-# Your code here
-
-```
 
 ## PDF: Probability Density Function
 > Probability density functions are similar to PMFs, in that they describe the probability of a result within a range of values.  But where PMFs can be descibed with barplots, PDFs are smooth curves.  
@@ -369,17 +376,12 @@ Create the pmf of a 12 sided die
 
 We can think of a pdf as a bunch of bars of probabilities getting smaller and smaller until each neighbor is indistinguishable from its neighbor.
 
-It is then intuitive that you cannot calculate expected value and variance in the same way as we did with pmfs.  Instead, be have to integrate over the entirity of the curve to calculate the expected value.
-
-### Expected value and variance for PDFs:
-![](images/exp_v_pdf.png)
-
 
 ![](images/pdf_inter.png)
 
 # Describing the PDF
 
-Instead of calculating the mean and standard deviation by hand, we will rather get familiar with how they affect the shape of our PDF.
+Instead of calculating the mean and standard deviation by hand (this would require integration), we will rather get familiar with how they affect the shape of our PDF.
 
 
 The mean of our PDF affects where it is centered on the x-axis.  In numpy and stats, mean is denoted by the loc parameter.
@@ -413,7 +415,7 @@ ax.set_title("Two distributions differing only in mean")
 
 
 
-![png](index_files/index_57_1.png)
+![png](index_files/index_59_1.png)
 
 
 The variance of our plots describes how closely the points are gathered around the mean.  Low variance means tight and skinny, high variance short and wide.
@@ -449,7 +451,7 @@ ax.set_title("Two distributions with different variance")
 
 
 
-![png](index_files/index_59_1.png)
+![png](index_files/index_61_1.png)
 
 
 ## Skew 
@@ -464,7 +466,7 @@ z_curve = np.random.normal(0,1, 1000)
 print(stats.skew(z_curve))
 ```
 
-    -0.04110511329255147
+    0.002429288587048337
 
 
 To add right skew to the data, let's add some outliers to the left of the mean.
@@ -484,7 +486,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_64_0.png)
+![png](index_files/index_66_0.png)
 
 
 
@@ -501,8 +503,12 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_65_0.png)
+![png](index_files/index_67_0.png)
 
+
+# Pair Program
+
+When we get to modeling, certain models may be improved by correcting the skew of our distributions to make them more normal.  below are a few different ways to correct for different types of skew.
 
 ### Transforming  Right/Positively Skewed Data
 
@@ -531,7 +537,7 @@ x to log base 10 of x, or x to log base e of x (ln x), or x to log base 2 of x, 
 The square, x to x2, has a moderate effect on distribution shape and it could be used to reduce left skewness.
 Another method of handling skewness is finding outliers and possibly removing them
 
-## Pair: Report Back the effect of your transformation
+Let's return to the Divy ride times.
 
 Let's return to our Divy ride time example.  
 
@@ -544,22 +550,19 @@ fig, ax = plt.subplots()
 
 ax.hist(divy_trips.ride_time, bins=50);
 ax.set_title("""Divy Bike Ride Time: 
-                Heavy Right Skew = {}""".format(round(
-                                                      stats.skew(divy_trips.ride_time)
-                                                    ,3)
-                                               )
-            );
+                Heavy Right Skew = {}""".format(round(stats.skew(divy_trips.ride_time),3)));
 
 ```
 
 
-![png](index_files/index_71_0.png)
+![png](index_files/index_74_0.png)
 
 
 With a partner, apply an appropriate transformation to reduce the skew of the distribution:
     
-  - 1. plot transformed distribution
-  - 2. Report transformed skew
+  - 1. Select and apply an appropriate transformation
+  - 1. Plot transformed distribution
+  - 3. Report transformed skew
     - Hint: certain transformations don't like zeros
     
 
@@ -600,11 +603,6 @@ lotto_dict = {0:0, 1:50, 2:25, 3:15, 4:10}
 
 # divide by total number of values
 
-```
-
-
-```python
-# Plot
 ```
 
 # Pair Program
@@ -653,7 +651,7 @@ ax2.set_title('CDF of Male Height in the US')
 
 
 
-![png](index_files/index_82_1.png)
+![png](index_files/index_84_1.png)
 
 
 If we provide numpy with the underlying parameters of our distribution, we can calculate: 
@@ -720,7 +718,7 @@ print(box['boxes'][0].get_data())
 
 
 
-![png](index_files/index_89_1.png)
+![png](index_files/index_91_1.png)
 
 
 ![break](https://media.giphy.com/media/mX3Pf78rXsfxrUDNwi/giphy.gif)
@@ -896,7 +894,7 @@ ax.set_title('Bernouli Distribution of No Hitters')
 
 
 
-![png](index_files/index_97_1.png)
+![png](index_files/index_99_1.png)
 
 
 
@@ -1103,7 +1101,7 @@ ax.plot(z_curve, stats.norm(mu,sigma).pdf(z_curve),
 
 
 
-![png](index_files/index_121_1.png)
+![png](index_files/index_123_1.png)
 
 
 ![](images/normal_2.png)
@@ -1147,7 +1145,7 @@ sns.kdeplot(z_dist, ax=ax)
 
 
 
-![png](index_files/index_127_1.png)
+![png](index_files/index_129_1.png)
 
 
 ![](images/empirical_rule.png)
@@ -1198,7 +1196,7 @@ sns.boxplot(df['bmi'])
 
 
 
-![png](index_files/index_135_1.png)
+![png](index_files/index_137_1.png)
 
 
 Using `stats.zscore`,remove all values that fall outside of  2.5 standard deviations on either side of the mean.
@@ -1244,7 +1242,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_142_0.png)
+![png](index_files/index_144_0.png)
 
 
 The Poisson distribution has a unique characteristic:
