@@ -3,6 +3,5 @@ student_first_names = [
 "Hunter","Jeffrey","Jonathan",
 "Josh","Karim","Matthew",
 "Ozair","Paul","Prabhakar",
-"Reuben","Ryan",
-"Sam","Sean","Sindhu",
-"Sindhu","William"]
+"Reuben",
+"Sam","Sindhu","William"]

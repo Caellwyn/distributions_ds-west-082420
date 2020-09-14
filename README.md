@@ -16,22 +16,10 @@
 
 The distributions we introduce today will reappear throughout the bootcamp.  They will:
 
-1. Allow us to conduct statistical tests to judge the validity of our conclusions.  As a data scientist at your company, you may be asked to judge whether a certain change to the user interface of your website increases conversion rate. 
+1. Allow us to conduct statistical tests to judge the validity of our conclusions.  As a data scientist at your company, you may be asked to perform various scientific tests. For example, you may be asked to judge whether a certain change to the user interface of your website increases conversion rate. 
 2. Provide the foundation for specific assumptions of linear regression.
 3. Appear in the cost functions tied to logistic regression and other models.
 4. Drive the classification decisions made in parametric models, such as Naive-Bayes. 
-
-# Activation
-
-![king_county](images/king_county.png)
-
-
-<p> A probability distribution describes the probability of an event in a sample space.  We recently finished a project investigating opportunity youth in Seattle's King County.  Considering the idea that a distribution can be the probability of any variable, what interesting distributions did you come across?  For example, you most likely looked at the fraction of opportunity youth in South King County vs. youth that fall outside of that category.  The probability that a youth is an opportunity youth, and the corresponding probability that a youth is not an opportunity you, is probability distribution. </p>
-
-
-#### Group Discussion Answers
-
-\>  
 
 
 
@@ -45,6 +33,10 @@ We will learn about a variety of different probability distributions, but before
 ![](images/uniform.png)
 
 > - There are 6 possible outcomes of the roll.  In other words, 4.5 cannot be an outcome. As you see on the PMF plot, the bars which represent probability do not touch, suggesting non-integer numbers between 1 and 6 are not possible results.
+
+### Let's think back to our Phase 1 projects: What are some examples of discrete probability distributions in either the King County or Movie datasets?
+
+your answer here
 
 Let's take a moment to look back at the Divy data we encountered in our visualizations lesson.
 
@@ -71,7 +63,7 @@ ax.set_title('Distribution of Divy Rides per Day')
 
 
 
-![png](index_files/index_13_1.png)
+![png](index_files/index_12_1.png)
 
 
 The above plot visualizes an **empirical** distribution. Empirical distributions are based on observations of real world phenomena. 
@@ -103,6 +95,15 @@ With a continous distribution, the set of possible results is an infinite set of
 > 3. Exponential
 
 
+### What are examples of continuous probability distributions in the SKC and movie datasets?
+
+
+```python
+# Probability that an opportunity youth is of a certain age in SKC
+# Probability distribution of the average review of a movie
+
+```
+
 
 ```python
 import matplotlib.pyplot as plt
@@ -120,7 +121,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_18_1.png)
+![png](index_files/index_19_1.png)
 
 
 
@@ -140,7 +141,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_19_1.png)
+![png](index_files/index_20_1.png)
 
 
 
@@ -161,7 +162,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_20_1.png)
+![png](index_files/index_21_1.png)
 
 
 The distinction between descrete and continuous is very important to have in your mind, and can easily be seen in plots. 
@@ -209,7 +210,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_22_0.png)
+![png](index_files/index_23_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -289,7 +290,7 @@ For our Lotto PMF, that means:
  $ \Large E((X-\mu)^2) = \sigma^2 = \Sigma^n_{i=1}p(x_i)(x_i - \mu)^2$
 
 # Student input:
-Help me calculate the variance for the Lotto Ball example
+Let's calculate the variance for the Lotto Ball example
 
 
 
@@ -309,23 +310,52 @@ variance
 
 
 
-## Uniform Distribution
+# Pair Program 7 minutes
 
-The uniform distribution describes a set of discrete outcomes whose probabilities are all equally likely.
+The **uniform** distribution describes a set of discrete outcomes whose probabilities are all equally likely.
 
 A common example is the roll of a die.  
 
 ![dice](https://media.giphy.com/media/3ohhwLh5dw0i7iLzOg/giphy.gif)
 
-The pmf of a discrete uniform distribution is simply:
 
-$ f(x)=\frac{1}{n} $
 
-Let's take the example of a twelve-sided die.  
+For the following pair programming challenge, you are tasked with:
 
-The probability for rolling any number, is 1/12.
+    1. Calculating the expected value of a 12-sided die roll using the above equations.
+    2. Calculating the variance and standard deviation of the 12-sided die roll using the above equations.
+    3. Plot the pmf of the 12-sided die roll.
 
-We can also calcalate the mean as follows:  
+
+```python
+expected_value = sum([1/12 * value for value in range(1,13)])
+expected_value
+```
+
+
+
+
+    6.5
+
+
+
+
+```python
+variance = sum([1/12 * (value-ev)**2 for value in range(1,13) ])
+standard_deviation = np.sqrt(var)
+standard_deviation
+```
+
+
+
+
+    3.452052529534663
+
+
+
+To check your answers, use the formulae below.
+
+
 $\Large E(X)=\frac{a+b}{2}$
 
 Where a is the lowest value and b is the highest. 
@@ -335,11 +365,6 @@ Where a is the lowest value and b is the highest.
 Variance can be calculated as follows:
 
 $ \Large\sigma^2=\frac{(b-a+1)^2-1}{12} $
-
-![pear](https://media.giphy.com/media/fBS9UfNnOtkVDqR70I/giphy.gif)
-
-# Short pair programming (2 minutes)
-Create the pmf of a 12 sided die
 
 
 ```python
@@ -358,7 +383,12 @@ ax.bar(result_set, roll_probabilities, width=.5)
 
 
 
-![png](index_files/index_39_1.png)
+![png](index_files/index_42_1.png)
+
+
+The pmf of a discrete uniform distribution is simply:
+
+$ f(x)=\frac{1}{n} $
 
 
 ## PDF: Probability Density Function
@@ -370,17 +400,12 @@ ax.bar(result_set, roll_probabilities, width=.5)
 
 We can think of a pdf as a bunch of bars of probabilities getting smaller and smaller until each neighbor is indistinguishable from its neighbor.
 
-It is then intuitive that you cannot calculate expected value and variance in the same way as we did with pmfs.  Instead, be have to integrate over the entirity of the curve to calculate the expected value.
-
-### Expected value and variance for PDFs:
-![](images/exp_v_pdf.png)
-
 
 ![](images/pdf_inter.png)
 
 # Describing the PDF
 
-Instead of calculating the mean and standard deviation by hand, we will rather get familiar with how they affect the shape of our PDF.
+Instead of calculating the mean and standard deviation by hand (this would require integration), we will rather get familiar with how they affect the shape of our PDF.
 
 
 The mean of our PDF affects where it is centered on the x-axis.  In numpy and stats, mean is denoted by the loc parameter.
@@ -410,7 +435,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_51_0.png)
+![png](index_files/index_54_0.png)
 
 
 
@@ -425,8 +450,12 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_52_0.png)
+![png](index_files/index_55_0.png)
 
+
+# Pair Program
+
+When we get to modeling, certain models may be improved by correcting the skew of our distributions to make them more normal.  below are a few different ways to correct for different types of skew.
 
 ### Transforming  Right/Positively Skewed Data
 
@@ -450,7 +479,7 @@ x to log base 10 of x, or x to log base e of x (ln x), or x to log base 2 of x, 
 The square, x to x2, has a moderate effect on distribution shape and it could be used to reduce left skewness.
 Another method of handling skewness is finding outliers and possibly removing them
 
-## Pair: Report Back the effect of your transformation
+Let's return to the Divy ride times.
 
 Let's return to our Divy ride time example.  
 
@@ -459,8 +488,9 @@ Below is the original distribution of ride times.
 
 With a partner, apply an appropriate transformation to reduce the skew of the distribution:
     
-  - 1. plot transformed distribution
-  - 2. Report transformed skew
+  - 1. Select and apply an appropriate transformation
+  - 1. Plot transformed distribution
+  - 3. Report transformed skew
     - Hint: certain transformations don't like zeros
     
 
@@ -480,7 +510,7 @@ ax.set_title("Log Transformed Ride Times: {}".format(round(stats.skew(log_ride),
 
 
 
-![png](index_files/index_58_1.png)
+![png](index_files/index_62_1.png)
 
 
 # Kurtosis
@@ -532,7 +562,7 @@ ax.set_xticklabels(x_tick_values);
 ```
 
 
-![png](index_files/index_63_0.png)
+![png](index_files/index_67_0.png)
 
 
 # Pair Program
@@ -568,7 +598,7 @@ ax.set_title('Divy-bike Ride CDF');
 ```
 
 
-![png](index_files/index_65_0.png)
+![png](index_files/index_69_0.png)
 
 
 
@@ -596,7 +626,7 @@ ax.hist(divy_trips['hour'], cumulative=True, bins=24, density=True)
 
 
 
-![png](index_files/index_66_1.png)
+![png](index_files/index_70_1.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -779,7 +809,7 @@ ax.bar(k_set, probs_k)
 
 
 
-![png](index_files/index_92_1.png)
+![png](index_files/index_96_1.png)
 
 
 # Pair Programming (12 minutes)
@@ -862,7 +892,7 @@ ax.set_xlabel('Number of No-Hitters');
 ```
 
 
-![png](index_files/index_97_0.png)
+![png](index_files/index_101_0.png)
 
 
 # 4. Normal Distribution
@@ -917,7 +947,7 @@ ax.set_xlabel('Height in Inches');
 ```
 
 
-![png](index_files/index_104_0.png)
+![png](index_files/index_108_0.png)
 
 
 # Standard Normal Distribution
@@ -979,7 +1009,7 @@ ax.set_title('Diabetes BMI with Outliers Removed');
 ```
 
 
-![png](index_files/index_115_0.png)
+![png](index_files/index_119_0.png)
 
 
 # Bonus: Poisson Distribution
