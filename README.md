@@ -351,31 +351,16 @@ expected_value
 
 
 ```python
-variance = sum([1/12 * (value-ev)**2 for value in range(1,13) ])
-standard_deviation = np.sqrt(var)
+variance = sum([1/12 * (value-expected_value)**2 for value in range(1,13) ])
+standard_deviation = np.sqrt(variance)
 standard_deviation
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-30-300c138b6146> in <module>
-          1 #__SOLUTION__
-    ----> 2 variance = sum([1/12 * (value-ev)**2 for value in range(1,13) ])
-          3 standard_deviation = np.sqrt(var)
-          4 standard_deviation
 
 
-    <ipython-input-30-300c138b6146> in <listcomp>(.0)
-          1 #__SOLUTION__
-    ----> 2 variance = sum([1/12 * (value-ev)**2 for value in range(1,13) ])
-          3 standard_deviation = np.sqrt(var)
-          4 standard_deviation
+    3.452052529534663
 
-
-    NameError: name 'ev' is not defined
 
 
 To check your answers, use the formulae below.
