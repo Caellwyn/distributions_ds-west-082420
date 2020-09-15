@@ -255,7 +255,7 @@ ${\displaystyle \operatorname {E} [X]= \Sigma^n_{i=1}p(x_i)x_i}$
 ```
 
 ### Variance/Standard Deviation
-Variance describes the spread of the data (it is also referred to as the second moment).  The 'spread' refers loosely to how far away the more extreme values are from the center.
+Variance describes the spread of the data (it is also referred to as the second moment).  The 'spread' refers loosely to how far away the values are from the center.
 
 Standard deviation is the square root of variance, and effectively measures the *average distance away from the mean*.
 
