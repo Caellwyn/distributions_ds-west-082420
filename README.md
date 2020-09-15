@@ -38,15 +38,6 @@ We will learn about a variety of different probability distributions, but before
 
 your answer here
 
-
-```python
-#__SOLUTIONS__
-# probability of a youth in SKC being an opportunity youth vs not
-# Probability of an opporunity youth in SKC having a certain level of education.
-# Probability distribution of of movies that have more than 500 reviews across genres
-# Probability distribution of movies making over 25 million across studios.
-```
-
 Let's take a moment to look back at the Divy data we encountered in our visualizations lesson.
 
 
@@ -192,7 +183,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_29_0.png)
+![png](index_files/index_28_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -238,7 +229,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_35_0.png)
+![png](index_files/index_34_0.png)
 
 
 ### Expected Value/Mean
@@ -420,7 +411,7 @@ ax.set_title("Two distributions differing only in mean")
 
 
 
-![png](index_files/index_60_1.png)
+![png](index_files/index_59_1.png)
 
 
 The variance of our plots describes how closely the points are gathered around the mean.  Low variance means tight and skinny, high variance short and wide.
@@ -456,7 +447,7 @@ ax.set_title("Two distributions with different variance")
 
 
 
-![png](index_files/index_62_1.png)
+![png](index_files/index_61_1.png)
 
 
 ## Skew 
@@ -491,7 +482,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_67_0.png)
+![png](index_files/index_66_0.png)
 
 
 
@@ -508,7 +499,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_68_0.png)
+![png](index_files/index_67_0.png)
 
 
 # Pair Program
@@ -560,7 +551,7 @@ ax.set_title("""Divy Bike Ride Time:
 ```
 
 
-![png](index_files/index_75_0.png)
+![png](index_files/index_74_0.png)
 
 
 With a partner, apply an appropriate transformation to reduce the skew of the distribution:
@@ -656,7 +647,7 @@ ax2.set_title('CDF of Male Height in the US')
 
 
 
-![png](index_files/index_85_1.png)
+![png](index_files/index_84_1.png)
 
 
 If we provide numpy with the underlying parameters of our distribution, we can calculate: 
@@ -723,7 +714,7 @@ print(box['boxes'][0].get_data())
 
 
 
-![png](index_files/index_92_1.png)
+![png](index_files/index_91_1.png)
 
 
 ![break](https://media.giphy.com/media/mX3Pf78rXsfxrUDNwi/giphy.gif)
@@ -899,7 +890,7 @@ ax.set_title('Bernouli Distribution of No Hitters')
 
 
 
-![png](index_files/index_100_1.png)
+![png](index_files/index_99_1.png)
 
 
 The expected value is the probability of success, i.e. **.001146**  
@@ -1094,7 +1085,7 @@ ax.plot(z_curve, stats.norm(mu,sigma).pdf(z_curve),
 
 
 
-![png](index_files/index_123_1.png)
+![png](index_files/index_122_1.png)
 
 
 ![](images/normal_2.png)
@@ -1138,7 +1129,7 @@ sns.kdeplot(z_dist, ax=ax)
 
 
 
-![png](index_files/index_129_1.png)
+![png](index_files/index_128_1.png)
 
 
 ![](images/empirical_rule.png)
