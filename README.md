@@ -60,6 +60,11 @@ Let's take a moment to look back at the Divy data we encountered in our visualiz
 
 ```python
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
 %load_ext autoreload
 %autoreload 2
 from src.data_import import prep_divy
@@ -68,10 +73,6 @@ from src.student_list import student_first_names
 divy_trips = prep_divy()
 
 ```
-
-    The autoreload extension is already loaded. To reload it, use:
-      %reload_ext autoreload
-
 
 
 ```python
@@ -139,6 +140,8 @@ With a continous distribution, the set of possible results is an infinite set of
 
 ### What are examples of continuous probability distributions in the SKC and movie datasets?
 
+    # your answer here
+
 
 ```python
 #__SOLUTION__
@@ -186,7 +189,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_28_1.png)
+![png](index_files/index_29_1.png)
 
 
 
@@ -207,7 +210,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_29_1.png)
+![png](index_files/index_30_1.png)
 
 
 
@@ -229,7 +232,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_30_1.png)
+![png](index_files/index_31_1.png)
 
 
 The distinction between descrete and continuous is very important to have in your mind, and can easily be seen in plots. 
@@ -254,7 +257,7 @@ import numpy as np
 title_1 = "height_of_us_women in inches"
 title_2 = 'outcomes of flipping a coin 100 times'
 title_3 = 'outcomes of rolling a 20 sided die 1000 times'
-title_4 = 'probability that a computer part lasts a certain amount of time from now.
+title_4 = 'probability that a computer part lasts a certain amount of time from now.'
 title_5 = 'probability that a picture is a chihauhua\n, a muffin, a bird, or a piece of pizza\n as would guess a neural network'
 title_6 = 'probability of rolling a value equal to or below\n a certain number on a 20 sided dice'
 no_title = 'no_title'
@@ -332,7 +335,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_34_0.png)
+![png](index_files/index_35_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -394,7 +397,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_41_0.png)
+![png](index_files/index_42_0.png)
 
 
 ### Expected Value/Mean
@@ -410,8 +413,8 @@ If we are working from the vantage point of known probabilities, the mean is ref
 The expected value of the Lotto example is:
 ${\displaystyle \operatorname {E} [X]= \Sigma^n_{i=1}p(x_i)x_i}$
 
-# Student input:
-Help me calculate the expected value of the lotto example:
+
+## Let's calculate the expected value of the lotto example:
 
 
 
@@ -451,8 +454,8 @@ For our Lotto PMF, that means:
 
  $ \Large E((X-\mu)^2) = \sigma^2 = \Sigma^n_{i=1}p(x_i)(x_i - \mu)^2$
 
-# Student input:
-Let's calculate the variance for the Lotto Ball example
+
+## Let's calculate the variance for the Lotto Ball example
 
 
 
@@ -598,7 +601,7 @@ ax.bar(result_set, roll_probabilities, width=.5)
 
 
 
-![png](index_files/index_63_1.png)
+![png](index_files/index_64_1.png)
 
 
 The pmf of a discrete uniform distribution is simply:
@@ -654,7 +657,7 @@ ax.set_title("Two distributions differing only in mean")
 
 
 
-![png](index_files/index_71_1.png)
+![png](index_files/index_72_1.png)
 
 
 The variance of our plots describes how closely the points are gathered around the mean.  Low variance means tight and skinny, high variance short and wide.
@@ -690,7 +693,7 @@ ax.set_title("Two distributions with different variance")
 
 
 
-![png](index_files/index_73_1.png)
+![png](index_files/index_74_1.png)
 
 
 ## Skew 
@@ -725,7 +728,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_78_0.png)
+![png](index_files/index_79_0.png)
 
 
 
@@ -741,7 +744,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_79_0.png)
+![png](index_files/index_80_0.png)
 
 
 
@@ -758,7 +761,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_80_0.png)
+![png](index_files/index_81_0.png)
 
 
 
@@ -774,7 +777,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_81_0.png)
+![png](index_files/index_82_0.png)
 
 
 # Pair Program
@@ -826,7 +829,7 @@ ax.set_title("""Divy Bike Ride Time:
 ```
 
 
-![png](index_files/index_88_0.png)
+![png](index_files/index_89_0.png)
 
 
 With a partner, apply an appropriate transformation to reduce the skew of the distribution:
@@ -859,7 +862,7 @@ ax.set_title("Log Transformed Ride Times: {}".format(round(stats.skew(log_ride),
 
 
 
-![png](index_files/index_91_1.png)
+![png](index_files/index_92_1.png)
 
 
 # Kurtosis
@@ -924,7 +927,7 @@ ax.set_xticklabels(x_tick_values);
 ```
 
 
-![png](index_files/index_97_0.png)
+![png](index_files/index_98_0.png)
 
 
 # Pair Program
@@ -961,7 +964,7 @@ ax.set_title('Divy-bike Ride CDF');
 ```
 
 
-![png](index_files/index_99_0.png)
+![png](index_files/index_100_0.png)
 
 
 
@@ -990,7 +993,7 @@ ax.hist(divy_trips['hour'], cumulative=True, bins=24, density=True)
 
 
 
-![png](index_files/index_100_1.png)
+![png](index_files/index_101_1.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -1027,7 +1030,7 @@ ax2.set_title('CDF of Male Height in the US')
 
 
 
-![png](index_files/index_103_1.png)
+![png](index_files/index_104_1.png)
 
 
 If we provide numpy with the underlying parameters of our distribution, we can calculate: 
@@ -1094,7 +1097,7 @@ print(box['boxes'][0].get_data())
 
 
 
-![png](index_files/index_110_1.png)
+![png](index_files/index_111_1.png)
 
 
 ![break](https://media.giphy.com/media/mX3Pf78rXsfxrUDNwi/giphy.gif)
@@ -1322,7 +1325,7 @@ ax.set_title('Bernouli Distribution of No Hitters')
 
 
 
-![png](index_files/index_121_1.png)
+![png](index_files/index_122_1.png)
 
 
 
@@ -1469,7 +1472,7 @@ ax.bar(k_set, probs_k)
 
 
 
-![png](index_files/index_140_1.png)
+![png](index_files/index_141_1.png)
 
 
 # Pair Programming (12 minutes)
@@ -1604,7 +1607,7 @@ ax.set_xlabel('Number of No-Hitters');
 ```
 
 
-![png](index_files/index_149_0.png)
+![png](index_files/index_150_0.png)
 
 
 # 4. Normal Distribution
@@ -1660,7 +1663,7 @@ ax.plot(z_curve, stats.norm(mu,sigma).pdf(z_curve),
 
 
 
-![png](index_files/index_154_1.png)
+![png](index_files/index_155_1.png)
 
 
 ![](images/normal_2.png)
@@ -1689,7 +1692,7 @@ ax.set_xlabel('Height in Inches');
 ```
 
 
-![png](index_files/index_158_0.png)
+![png](index_files/index_159_0.png)
 
 
 # Standard Normal Distribution
@@ -1718,7 +1721,7 @@ sns.kdeplot(z_dist, ax=ax)
 
 
 
-![png](index_files/index_161_1.png)
+![png](index_files/index_162_1.png)
 
 
 ![](images/empirical_rule.png)
@@ -1787,7 +1790,7 @@ sns.boxplot(df['bmi'])
 
 
 
-![png](index_files/index_170_1.png)
+![png](index_files/index_171_1.png)
 
 
 Using `stats.zscore`,remove all values that fall outside of  2.5 standard deviations on either side of the mean.
@@ -1809,7 +1812,7 @@ ax.set_title('Diabetes BMI with Outliers Removed');
 ```
 
 
-![png](index_files/index_173_0.png)
+![png](index_files/index_174_0.png)
 
 
 # Bonus: Poisson Distribution
@@ -1848,7 +1851,7 @@ ax.legend(loc='best');
 ```
 
 
-![png](index_files/index_178_0.png)
+![png](index_files/index_179_0.png)
 
 
 The Poisson distribution has a unique characteristic:
