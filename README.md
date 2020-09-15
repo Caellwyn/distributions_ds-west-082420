@@ -346,16 +346,10 @@ round(variance,7) == round(((12-1+1)**2-1)/12, 7)
 ```
 
 
-    ---------------------------------------------------------------------------
 
-    TypeError                                 Traceback (most recent call last)
 
-    <ipython-input-32-ed373becd212> in <module>
-          1 # Again, let's check our math
-    ----> 2 round(variance,7) == round(((12-1+1)**2-1)/12, 7)
-    
+    True
 
-    TypeError: type NoneType doesn't define __round__ method
 
 
 The pmf of a discrete uniform distribution is simply:
@@ -613,6 +607,12 @@ Take this in steps (no pun intended).
 6. Fix the x-ticks to be positioned at the beginning of each bar
 
 
+
+```python
+# Your Code here
+
+```
+
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
 - Have to be careful with interpretation in PDF
 
@@ -647,7 +647,7 @@ ax2.set_title('CDF of Male Height in the US')
 
 
 
-![png](index_files/index_84_1.png)
+![png](index_files/index_85_1.png)
 
 
 If we provide numpy with the underlying parameters of our distribution, we can calculate: 
@@ -714,7 +714,7 @@ print(box['boxes'][0].get_data())
 
 
 
-![png](index_files/index_91_1.png)
+![png](index_files/index_92_1.png)
 
 
 ![break](https://media.giphy.com/media/mX3Pf78rXsfxrUDNwi/giphy.gif)
@@ -890,7 +890,7 @@ ax.set_title('Bernouli Distribution of No Hitters')
 
 
 
-![png](index_files/index_99_1.png)
+![png](index_files/index_100_1.png)
 
 
 The expected value is the probability of success, i.e. **.001146**  
@@ -1085,7 +1085,7 @@ ax.plot(z_curve, stats.norm(mu,sigma).pdf(z_curve),
 
 
 
-![png](index_files/index_122_1.png)
+![png](index_files/index_123_1.png)
 
 
 ![](images/normal_2.png)
@@ -1129,7 +1129,7 @@ sns.kdeplot(z_dist, ax=ax)
 
 
 
-![png](index_files/index_128_1.png)
+![png](index_files/index_129_1.png)
 
 
 ![](images/empirical_rule.png)
