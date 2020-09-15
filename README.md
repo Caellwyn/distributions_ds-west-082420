@@ -528,31 +528,16 @@ expected_value
 
 ```python
 #__SOLUTION__
-variance = sum([1/12 * (value-ev)**2 for value in range(1,13) ])
-standard_deviation = np.sqrt(var)
+variance = sum([1/12 * (value-expected_value)**2 for value in range(1,13) ])
+standard_deviation = np.sqrt(variance)
 standard_deviation
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-30-300c138b6146> in <module>
-          1 #__SOLUTION__
-    ----> 2 variance = sum([1/12 * (value-ev)**2 for value in range(1,13) ])
-          3 standard_deviation = np.sqrt(var)
-          4 standard_deviation
 
 
-    <ipython-input-30-300c138b6146> in <listcomp>(.0)
-          1 #__SOLUTION__
-    ----> 2 variance = sum([1/12 * (value-ev)**2 for value in range(1,13) ])
-          3 standard_deviation = np.sqrt(var)
-          4 standard_deviation
+    3.452052529534663
 
-
-    NameError: name 'ev' is not defined
 
 
 To check your answers, use the formulae below.
@@ -588,16 +573,10 @@ round(variance,7) == round(((12-1+1)**2-1)/12, 7)
 ```
 
 
-    ---------------------------------------------------------------------------
 
-    TypeError                                 Traceback (most recent call last)
 
-    <ipython-input-32-ed373becd212> in <module>
-          1 # Again, let's check our math
-    ----> 2 round(variance,7) == round(((12-1+1)**2-1)/12, 7)
-    
+    True
 
-    TypeError: type NoneType doesn't define __round__ method
 
 
 
@@ -961,6 +940,12 @@ Take this in steps (no pun intended).
 
 
 ```python
+# Your Code here
+
+```
+
+
+```python
 #__SOLUTION__
 
 rides_per_hr = divy_trips.groupby('hour').count()['ride_id']
@@ -981,7 +966,7 @@ ax.set_title('Divy-bike Ride CDF');
 ```
 
 
-![png](index_files/index_100_0.png)
+![png](index_files/index_101_0.png)
 
 
 
@@ -1010,7 +995,7 @@ ax.hist(divy_trips['hour'], cumulative=True, bins=24, density=True)
 
 
 
-![png](index_files/index_101_1.png)
+![png](index_files/index_102_1.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -1047,7 +1032,7 @@ ax2.set_title('CDF of Male Height in the US')
 
 
 
-![png](index_files/index_104_1.png)
+![png](index_files/index_105_1.png)
 
 
 If we provide numpy with the underlying parameters of our distribution, we can calculate: 
@@ -1114,7 +1099,7 @@ print(box['boxes'][0].get_data())
 
 
 
-![png](index_files/index_111_1.png)
+![png](index_files/index_112_1.png)
 
 
 ![break](https://media.giphy.com/media/mX3Pf78rXsfxrUDNwi/giphy.gif)
@@ -1342,7 +1327,7 @@ ax.set_title('Bernouli Distribution of No Hitters')
 
 
 
-![png](index_files/index_122_1.png)
+![png](index_files/index_123_1.png)
 
 
 The expected value is the probability of success, i.e. **.001146**  
@@ -1477,7 +1462,7 @@ ax.bar(k_set, probs_k)
 
 
 
-![png](index_files/index_140_1.png)
+![png](index_files/index_141_1.png)
 
 
 # Pair Programming (12 minutes)
@@ -1612,7 +1597,7 @@ ax.set_xlabel('Number of No-Hitters');
 ```
 
 
-![png](index_files/index_149_0.png)
+![png](index_files/index_150_0.png)
 
 
 # 4. Normal Distribution
@@ -1668,7 +1653,7 @@ ax.plot(z_curve, stats.norm(mu,sigma).pdf(z_curve),
 
 
 
-![png](index_files/index_154_1.png)
+![png](index_files/index_155_1.png)
 
 
 ![](images/normal_2.png)
@@ -1697,7 +1682,7 @@ ax.set_xlabel('Height in Inches');
 ```
 
 
-![png](index_files/index_158_0.png)
+![png](index_files/index_159_0.png)
 
 
 # Standard Normal Distribution
@@ -1726,7 +1711,7 @@ sns.kdeplot(z_dist, ax=ax)
 
 
 
-![png](index_files/index_161_1.png)
+![png](index_files/index_162_1.png)
 
 
 ![](images/empirical_rule.png)
@@ -1826,5 +1811,5 @@ ax.boxplot(no_fliers_trips.ride_time);
 ```
 
 
-![png](index_files/index_175_0.png)
+![png](index_files/index_176_0.png)
 
