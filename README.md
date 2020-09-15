@@ -349,10 +349,25 @@ standard_deviation
 ```
 
 
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-30-300c138b6146> in <module>
+          1 #__SOLUTION__
+    ----> 2 variance = sum([1/12 * (value-ev)**2 for value in range(1,13) ])
+          3 standard_deviation = np.sqrt(var)
+          4 standard_deviation
 
 
-    3.452052529534663
+    <ipython-input-30-300c138b6146> in <listcomp>(.0)
+          1 #__SOLUTION__
+    ----> 2 variance = sum([1/12 * (value-ev)**2 for value in range(1,13) ])
+          3 standard_deviation = np.sqrt(var)
+          4 standard_deviation
 
+
+    NameError: name 'ev' is not defined
 
 
 To check your answers, use the formulae below.
@@ -911,7 +926,7 @@ Among human beings, 98.6 degrees Fahrenheit is an _average_ body temperature. Ma
 
 Similarly, there are large elephants and there are small elephants, but most elephants are near the average size.
 
-The normal distribution is _very_ common in nature (**Why?**) and will arise often in your work. Get to know it well!
+The normal distribution is _very_ common in nature and will arise often in your work. Get to know it well!
 
 You will recognize it by its characteristic bell curve. 
 
@@ -990,75 +1005,36 @@ z
 
 
 
-# Exercise
+# Pair Program
 
 Z score can be used to eliminate outliers.
 
-For example, you may want to remove points that fall outside of 2.5 standard deviations of the mean.
+Based on the empirical rule, if our data is normally distributed, we can remove outliers based on the zscore. 
 
-In the diabetes dataset, the boxplot of bmi shows three outliers.
+In the example below, we will consider anything outside of 3 std's away from the mean an outlier.
 
-Using `stats.zscore`,remove all values that fall outside of  2.5 standard deviations on either side of the mean.
+Z score outlier removal wouldn't work on our original divy bike ride time dataset, because the original set was heavily right skewed.  However, our log transformed data set was approximately normal.  Let's remove outliers based on the log transformed data.
+
+In order to do so, you need to:
+
+    1. remove records with zero values for ride_time
+    2. log transform the ride_times
+    3. use stats.zscore to calculate the z-score for each logtransformed time
+    4. Use np.absolute to subset the dataframe to include values above or below 3 standard deviations from the mean 
+    5. Plot the boxplot of the ride times with time in seconds (i.e. do not plot the log-transformed distribution.  The boxplot, therefore, will still show outliers)
 
 
 ```python
-df_nofliers = df.loc[np.abs(stats.zscore(df['bmi']))<2.5]
+# 1
+divy_trips_no_zero = divy_trips[divy_trips.ride_time > 0]
+# 2,3,4
+no_fliers_trips = divy_trips_no_zero[np.absolute(stats.zscore((np.log(divy_trips_no_zero.ride_time[divy_trips_no_zero.ride_time > 0]))) < 3)]
 
+# 5
 fig, ax = plt.subplots()
-sns.boxplot(df_nofliers['bmi'], ax=ax)
-ax.set_title('Diabetes BMI with Outliers Removed');
-
+ax.boxplot(no_fliers_trips.ride_time);
 ```
 
 
-![png](index_files/index_120_0.png)
-
-
-# Bonus: Poisson Distribution
-
-The Poisson distribution describes the probability of a certain number of a specific event occuring over a given interval. We assume that these events occur at a constant rate and independently.
-
-Examples are:
-- number of visitors to a website over an hour
-- number of pieces of mail arriving at your door per day over a month
-- number of births in a hospital per day
-
-
-Shape of the Poisson Distribution is governed by the rate parameter lambda:
-
-$\Large\lambda = \frac{Avg\ number\ of\ events}{period\ of\ time}$
-
-${\displaystyle P(k)= {\frac {\lambda ^{k}e^{-\lambda }}{k!}}}$
-
-Consider the scenario where a website receives 200 hits per hour.
-
-The pmf of the Poisson distribution would be:
-
-
-The Poisson distribution has a unique characteristic:
-    
-$\Large\mu = \sigma^2 = \lambda$
-
-# Code Along
-
-Northwestern Memorial is a very busy hospital.  The doctors there deliver, on average, 30 newborns per day.
-
-Assume that newborns arrive at a constant rate and independently.
-
-What is the probability of seeing exactly 40 newborns delivered on a given day.
-
-
-```python
-k = 40
-lam = 30
-
-(lam**k*np.e**-lam)/(np.math.factorial(k))
-
-```
-
-
-
-
-    0.013943463479967761
-
+![png](index_files/index_119_0.png)
 
