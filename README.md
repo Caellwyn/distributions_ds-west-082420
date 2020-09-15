@@ -40,7 +40,7 @@ your answer here
 
 
 ```python
-#__SOLUTIONS__
+#__SOLUTION__
 # probability of a youth in SKC being an opportunity youth vs not
 # Probability of an opporunity youth in SKC having a certain level of education.
 # Probability distribution of of movies that have more than 500 reviews across genres
