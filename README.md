@@ -192,11 +192,7 @@ plt.tight_layout()
 ```
 
 
-      File "<ipython-input-49-8ef349ae5c7e>", line 4
-        title_4 = 'probability that a computer part lasts a certain amount of time from now.
-                                                                                            ^
-    SyntaxError: EOL while scanning string literal
-
+![png](index_files/index_29_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -359,10 +355,16 @@ round(variance,7) == round(((12-1+1)**2-1)/12, 7)
 ```
 
 
+    ---------------------------------------------------------------------------
 
+    TypeError                                 Traceback (most recent call last)
 
-    True
+    <ipython-input-32-ed373becd212> in <module>
+          1 # Again, let's check our math
+    ----> 2 round(variance,7) == round(((12-1+1)**2-1)/12, 7)
+    
 
+    TypeError: type NoneType doesn't define __round__ method
 
 
 The pmf of a discrete uniform distribution is simply:
@@ -469,7 +471,7 @@ z_curve = np.random.normal(0,1, 1000)
 print(stats.skew(z_curve))
 ```
 
-    0.002429288587048337
+    0.08141307654492642
 
 
 To add right skew to the data, let's add some outliers to the left of the mean.
@@ -717,7 +719,7 @@ print(box['boxes'][0].get_data())
 ```
 
     interquartile range 67.97653074941175 - 72.02346925058825
-    (array([0.925, 1.075, 1.075, 0.925, 0.925]), array([68.0285745 , 68.0285745 , 72.04366153, 72.04366153, 68.0285745 ]))
+    (array([0.925, 1.075, 1.075, 0.925, 0.925]), array([68.1099954 , 68.1099954 , 71.94071889, 71.94071889, 68.1099954 ]))
 
 
 
@@ -900,18 +902,6 @@ ax.set_title('Bernouli Distribution of No Hitters')
 ![png](index_files/index_100_1.png)
 
 
-
-```python
-(p_no_hitter)*(1-p_no_hitter)
-```
-
-
-
-
-    0.0011447626555435414
-
-
-
 The expected value is the probability of success, i.e. **.001146**  
 The variance is:  
 $\sigma^2 = (p\_no\_hitter)*(1-p\_no\_hitter) = .001147 $
@@ -1065,7 +1055,7 @@ Among human beings, 98.6 degrees Fahrenheit is an _average_ body temperature. Ma
 
 Similarly, there are large elephants and there are small elephants, but most elephants are near the average size.
 
-The normal distribution is _very_ common in nature (**Why?**) and will arise often in your work. Get to know it well!
+The normal distribution is _very_ common in nature and will arise often in your work. Get to know it well!
 
 You will recognize it by its characteristic bell curve. 
 
@@ -1104,7 +1094,7 @@ ax.plot(z_curve, stats.norm(mu,sigma).pdf(z_curve),
 
 
 
-![png](index_files/index_124_1.png)
+![png](index_files/index_123_1.png)
 
 
 ![](images/normal_2.png)
@@ -1148,7 +1138,7 @@ sns.kdeplot(z_dist, ax=ax)
 
 
 
-![png](index_files/index_130_1.png)
+![png](index_files/index_129_1.png)
 
 
 ![](images/empirical_rule.png)
@@ -1170,110 +1160,48 @@ Based on the empirical rule, if you were sampling heights of American women, spe
 # Your code here
 ```
 
-# Exercise
+# Pair Program
 
 Z score can be used to eliminate outliers.
 
-For example, you may want to remove points that fall outside of 2.5 standard deviations of the mean.
+Based on the empirical rule, if our data is normally distributed, we can remove outliers based on the zscore. 
 
-In the diabetes dataset, the boxplot of bmi shows three outliers.
+In the example below, we will consider anything outside of 3 std's away from the mean an outlier.
 
+Z score outlier removal wouldn't work on our original divy bike ride time dataset, because the original set was heavily right skewed.  However, our log transformed data set was approximately normal.  Let's remove outliers based on the log transformed data.
 
-```python
-from sklearn.datasets import load_diabetes
-import pandas as pd
+In order to do so, you need to:
 
-data = load_diabetes()
-data.keys()
-df = pd.DataFrame(data['data'])
-df.columns = data['feature_names']
-
-sns.boxplot(df['bmi'])
-```
-
-
-
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x122d95278>
-
-
-
-
-![png](index_files/index_138_1.png)
-
-
-Using `stats.zscore`,remove all values that fall outside of  2.5 standard deviations on either side of the mean.
+    1. remove records with zero values for ride_time
+    2. log transform the ride_times
+    3. use stats.zscore to calculate the z-score for each logtransformed time
+    4. Use np.absolute to subset the dataframe to include values above or below 3 standard deviations from the mean 
+    5. Plot the boxplot of the ride times with time in seconds (i.e. do not plot the log-transformed distribution.  The boxplot, therefore, will still show outliers)
 
 
 ```python
-# Your code here
+# Remove zero values
+
 ```
-
-# Bonus: Poisson Distribution
-
-The Poisson distribution describes the probability of a certain number of a specific event occuring over a given interval. We assume that these events occur at a constant rate and independently.
-
-Examples are:
-- number of visitors to a website over an hour
-- number of pieces of mail arriving at your door per day over a month
-- number of births in a hospital per day
-
-
-Shape of the Poisson Distribution is governed by the rate parameter lambda:
-
-$\Large\lambda = \frac{Avg\ number\ of\ events}{period\ of\ time}$
-
-${\displaystyle P(k)= {\frac {\lambda ^{k}e^{-\lambda }}{k!}}}$
-
-Consider the scenario where a website receives 200 hits per hour.
-
-The pmf of the Poisson distribution would be:
-
 
 
 ```python
-rate = 40
-
-fig, ax = plt.subplots(1, 1, figsize=(6, 6))
-x = np.arange(stats.poisson.ppf(0.001, rate),
-              stats.poisson.ppf(.9999, rate))
-
-
-ax.bar(x, stats.poisson(rate).pmf(x), color = 'r',
-          label='Poisson Distribution:\n Website Hits Over an Hour')
-ax.legend(loc='best');
+# log transform ride times
 ```
 
 
-![png](index_files/index_145_0.png)
+```python
+# use stats.zscore to calculate the z-score for each logtransformed time
+
+```
 
 
-The Poisson distribution has a unique characteristic:
+```python
+# 4. Use np.absolute to subset the dataframe to include values above or below 3 standard deviations from the mean 
+```
+
+
+```python
+# 5. Plot the boxplot of the ride times with time in seconds (i.e. do not plot the log-transformed distribution.  The boxplot, therefore, will still show outliers)
     
-$\Large\mu = \sigma^2 = \lambda$
-
-# Code Along
-
-Northwestern Memorial is a very busy hospital.  The doctors there deliver, on average, 30 newborns per day.
-
-Assume that newborns arrive at a constant rate and independently.
-
-What is the probability of seeing exactly 40 newborns delivered on a given day.
-
-
-```python
-three_random_students(student_first_names)
-```
-
-    ['Ali' 'Sindhu' 'Sam']
-
-
-
-```python
-# Code here
-```
-
-
-```python
-
 ```
