@@ -38,6 +38,14 @@ We will learn about a variety of different probability distributions, but before
 
 your answer here
 
+
+```python
+# probability of a youth in SKC being an opportunity youth vs not
+# Probability of an opporunity youth in SKC having a certain level of education.
+# Probability distribution of of movies that have more than 500 reviews across genres
+# Probability distribution of movies making over 25 million across studios.
+```
+
 Let's take a moment to look back at the Divy data we encountered in our visualizations lesson.
 
 
@@ -63,7 +71,7 @@ ax.set_title('Distribution of Divy Rides per Day')
 
 
 
-![png](index_files/index_12_1.png)
+![png](index_files/index_13_1.png)
 
 
 The above plot visualizes an **empirical** distribution. Empirical distributions are based on observations of real world phenomena. 
@@ -123,7 +131,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_20_1.png)
+![png](index_files/index_21_1.png)
 
 
 
@@ -143,7 +151,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_21_1.png)
+![png](index_files/index_22_1.png)
 
 
 
@@ -164,7 +172,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_22_1.png)
+![png](index_files/index_23_1.png)
 
 
 The distinction between descrete and continuous is very important to have in your mind, and can easily be seen in plots. 
@@ -212,7 +220,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_24_0.png)
+![png](index_files/index_25_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -400,7 +408,7 @@ ax.bar(result_set, roll_probabilities, width=.5)
 
 
 
-![png](index_files/index_43_1.png)
+![png](index_files/index_44_1.png)
 
 
 The pmf of a discrete uniform distribution is simply:
@@ -452,7 +460,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_55_0.png)
+![png](index_files/index_56_0.png)
 
 
 
@@ -467,7 +475,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_56_0.png)
+![png](index_files/index_57_0.png)
 
 
 # Pair Program
@@ -527,7 +535,7 @@ ax.set_title("Log Transformed Ride Times: {}".format(round(stats.skew(log_ride),
 
 
 
-![png](index_files/index_63_1.png)
+![png](index_files/index_64_1.png)
 
 
 # Kurtosis
@@ -579,7 +587,7 @@ ax.set_xticklabels(x_tick_values);
 ```
 
 
-![png](index_files/index_68_0.png)
+![png](index_files/index_69_0.png)
 
 
 # Pair Program
@@ -615,7 +623,7 @@ ax.set_title('Divy-bike Ride CDF');
 ```
 
 
-![png](index_files/index_70_0.png)
+![png](index_files/index_71_0.png)
 
 
 
@@ -643,7 +651,7 @@ ax.hist(divy_trips['hour'], cumulative=True, bins=24, density=True)
 
 
 
-![png](index_files/index_71_1.png)
+![png](index_files/index_72_1.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -826,7 +834,7 @@ ax.bar(k_set, probs_k)
 
 
 
-![png](index_files/index_97_1.png)
+![png](index_files/index_98_1.png)
 
 
 # Pair Programming (12 minutes)
@@ -909,7 +917,7 @@ ax.set_xlabel('Number of No-Hitters');
 ```
 
 
-![png](index_files/index_102_0.png)
+![png](index_files/index_103_0.png)
 
 
 # 4. Normal Distribution
@@ -964,7 +972,7 @@ ax.set_xlabel('Height in Inches');
 ```
 
 
-![png](index_files/index_109_0.png)
+![png](index_files/index_110_0.png)
 
 
 # Standard Normal Distribution
@@ -1036,5 +1044,5 @@ ax.boxplot(no_fliers_trips.ride_time);
 ```
 
 
-![png](index_files/index_119_0.png)
+![png](index_files/index_120_0.png)
 
