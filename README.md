@@ -97,6 +97,8 @@ With a continous distribution, the set of possible results is an infinite set of
 
 ### What are examples of continuous probability distributions in the SKC and movie datasets?
 
+    # your answer here
+
 
 ```python
 # Probability that an opportunity youth is of a certain age in SKC
@@ -121,7 +123,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_19_1.png)
+![png](index_files/index_20_1.png)
 
 
 
@@ -141,7 +143,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_20_1.png)
+![png](index_files/index_21_1.png)
 
 
 
@@ -162,7 +164,7 @@ ax.set_title("Divy Bike Ride Time in Seconds\n (No Outliers)")
 
 
 
-![png](index_files/index_21_1.png)
+![png](index_files/index_22_1.png)
 
 
 The distinction between descrete and continuous is very important to have in your mind, and can easily be seen in plots. 
@@ -210,7 +212,7 @@ plt.tight_layout()
 ```
 
 
-![png](index_files/index_23_0.png)
+![png](index_files/index_24_0.png)
 
 
 # 2. PMFs, PDFs, and CDFs, oh my!
@@ -254,8 +256,8 @@ If we are working from the vantage point of known probabilities, the mean is ref
 The expected value of the Lotto example is:
 ${\displaystyle \operatorname {E} [X]= \Sigma^n_{i=1}p(x_i)x_i}$
 
-# Student input:
-Help me calculate the expected value of the lotto example:
+
+## Let's calculate the expected value of the lotto example:
 
 
 
@@ -289,8 +291,8 @@ For our Lotto PMF, that means:
 
  $ \Large E((X-\mu)^2) = \sigma^2 = \Sigma^n_{i=1}p(x_i)(x_i - \mu)^2$
 
-# Student input:
-Let's calculate the variance for the Lotto Ball example
+
+## Let's calculate the variance for the Lotto Ball example
 
 
 
@@ -383,7 +385,7 @@ ax.bar(result_set, roll_probabilities, width=.5)
 
 
 
-![png](index_files/index_42_1.png)
+![png](index_files/index_43_1.png)
 
 
 The pmf of a discrete uniform distribution is simply:
@@ -435,7 +437,7 @@ ax.set_title(f"Right Skew {stats.skew(right_skewed_data)}");
 ```
 
 
-![png](index_files/index_54_0.png)
+![png](index_files/index_55_0.png)
 
 
 
@@ -450,7 +452,7 @@ ax.set_title(f"Left Skew {stats.skew(left_skewed_data)}");
 ```
 
 
-![png](index_files/index_55_0.png)
+![png](index_files/index_56_0.png)
 
 
 # Pair Program
@@ -510,7 +512,7 @@ ax.set_title("Log Transformed Ride Times: {}".format(round(stats.skew(log_ride),
 
 
 
-![png](index_files/index_62_1.png)
+![png](index_files/index_63_1.png)
 
 
 # Kurtosis
@@ -562,7 +564,7 @@ ax.set_xticklabels(x_tick_values);
 ```
 
 
-![png](index_files/index_67_0.png)
+![png](index_files/index_68_0.png)
 
 
 # Pair Program
@@ -598,7 +600,7 @@ ax.set_title('Divy-bike Ride CDF');
 ```
 
 
-![png](index_files/index_69_0.png)
+![png](index_files/index_70_0.png)
 
 
 
@@ -626,7 +628,7 @@ ax.hist(divy_trips['hour'], cumulative=True, bins=24, density=True)
 
 
 
-![png](index_files/index_70_1.png)
+![png](index_files/index_71_1.png)
 
 
 - For continuous random variables, obtaining probabilities for observing a specific outcome is not possible 
@@ -809,7 +811,7 @@ ax.bar(k_set, probs_k)
 
 
 
-![png](index_files/index_96_1.png)
+![png](index_files/index_97_1.png)
 
 
 # Pair Programming (12 minutes)
@@ -892,7 +894,7 @@ ax.set_xlabel('Number of No-Hitters');
 ```
 
 
-![png](index_files/index_101_0.png)
+![png](index_files/index_102_0.png)
 
 
 # 4. Normal Distribution
@@ -947,7 +949,7 @@ ax.set_xlabel('Height in Inches');
 ```
 
 
-![png](index_files/index_108_0.png)
+![png](index_files/index_109_0.png)
 
 
 # Standard Normal Distribution
@@ -1009,7 +1011,7 @@ ax.set_title('Diabetes BMI with Outliers Removed');
 ```
 
 
-![png](index_files/index_119_0.png)
+![png](index_files/index_120_0.png)
 
 
 # Bonus: Poisson Distribution
